@@ -59,4 +59,6 @@ $ sudo apt-get update && \
 
 ## Consuming
 
+All the routes are contained in a so-called **routes data store**. It is located in the `data/` directory.
+
 **TBD** :dvd:
