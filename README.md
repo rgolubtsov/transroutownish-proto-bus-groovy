@@ -44,7 +44,14 @@ One may consider this project has to be suitable for a wide variety of applied a
 
 ## Building
 
-**TBD** :dvd:
+Install the necessary dependencies [*under Ubuntu Server (Ubuntu 22.04.3 LTS x86-64)*] (`openjdk-17-jre-headless`, `groovy`, `gradle`, `make`, `docker.io`):
+
+```
+$ sudo apt-get update && \
+  sudo apt-get install openjdk-17-jre-headless groovy gradle make docker.io -y
+```
+
+**TBD** :cd:
 
 ## Running
 
