@@ -1,0 +1,22 @@
+/*
+ * settings.gradle
+ * ============================================================================
+ * Urban bus routing microservice prototype (Groovy port). Version 0.0.1
+ * ============================================================================
+ * A daemon written in Groovy, designed and intended to be run
+ * as a microservice, implementing a simple urban bus routing prototype.
+ * ============================================================================
+ * Copyright (C) 2023 Radislav (Radicchio) Golubtsov
+ *
+ * (See the LICENSE file at the top of the source tree.)
+ */
+
+plugins {
+    // Apply the foojay-resolver plugin to allow automatic download of JDKs.
+    id 'org.gradle.toolchains.foojay-resolver-convention' version '0.4.0'
+}
+
+rootProject.name = 'bus'
+include('app')
+
+// vim:set nu et ts=4 sw=4:
