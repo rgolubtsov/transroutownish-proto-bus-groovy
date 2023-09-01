@@ -48,7 +48,24 @@ Install the necessary dependencies [*under Ubuntu Server (Ubuntu 22.04.3 LTS x86
 
 ```
 $ sudo apt-get update && \
-  sudo apt-get install openjdk-17-jre-headless groovy gradle make docker.io -y
+  sudo apt-get install openjdk-17-jre-headless make docker.io -y
+```
+
+Since Groovy and Gradle packages are somehow outdated in the stock Ubuntu package repository, they are preferred to be installed through the SDKMAN! toolkit. For that, first it needs to install SDKMAN! and to `source` its initialization script:
+
+```
+$ curl -s https://get.sdkman.io | bash
+...
+$ . /home/<username>/.sdkman/bin/sdkman-init.sh
+```
+
+Then install latest stable versions of Groovy and Gradle via SDKMAN!:
+
+```
+$ sdk install groovy
+...
+$ sdk install gradle
+...
 ```
 
 **TBD** :cd:
