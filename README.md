@@ -68,6 +68,17 @@ $ sdk install gradle
 ...
 ```
 
+**Build** the microservice using **Gradle Wrapper**:
+
+```
+$ ./gradlew clean
+...
+$ ./gradlew compileGroovy
+...
+$ ./gradlew jar
+...
+```
+
 **TBD** :cd:
 
 ## Running
