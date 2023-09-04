@@ -17,6 +17,6 @@ plugins {
 }
 
 rootProject.name = 'bus'
-include('app')
+include('bus')
 
 // vim:set nu et ts=4 sw=4:
