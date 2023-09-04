@@ -1,5 +1,5 @@
 /*
- * app/src/main/groovy/bus/App.groovy
+ * app/src/main/groovy/bus/UrbanBusRoutingApp.groovy
  * ============================================================================
  * Urban bus routing microservice prototype (Groovy port). Version 0.0.1
  * ============================================================================
@@ -11,15 +11,15 @@
  * (See the LICENSE file at the top of the source tree.)
  */
 
-package bus
+package com.transroutownish.proto.bus
 
-class App {
+class UrbanBusRoutingApp {
     String getTransroutownish() {
         return '=== Trans-RoutE-Townish (Groovy port)'
     }
 
     static void main(String[] args) {
-        println new App().transroutownish
+        println new UrbanBusRoutingApp().transroutownish
     }
 }
 
