@@ -83,7 +83,18 @@ $ ./gradlew build
 
 ## Running
 
-**TBD** :dvd:
+**Run** the microservice using **Gradle Wrapper** (generally for development and debugging purposes):
+
+```
+$ ./gradlew -q run; echo $?
+$ #               ^   ^   ^
+$ #               |   |   |
+$ # --------------+---+---+
+$ # Whilst this is not necessary, it's beneficial knowing the exit code.
+...
+```
+
+**TBD** :cd:
 
 ## Consuming
 
