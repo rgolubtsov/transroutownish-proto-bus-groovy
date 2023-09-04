@@ -45,4 +45,8 @@ application {
     mainClass = 'com.transroutownish.proto.bus.UrbanBusRoutingApp'
 }
 
+group       = 'com.transroutownish.proto'
+version     = '0.0.1'
+description = 'Urban bus routing microservice prototype.'
+
 // vim:set nu et ts=4 sw=4:
