@@ -45,6 +45,13 @@ application {
     mainClass = 'com.transroutownish.proto.bus.UrbanBusRoutingApp'
 }
 
+jar {
+    manifest {
+        attributes 'Main-Class':
+            'com.transroutownish.proto.bus.UrbanBusRoutingApp'
+    }
+}
+
 group       = 'com.transroutownish.proto'
 version     = '0.0.1'
 description = 'Urban bus routing microservice prototype.'
