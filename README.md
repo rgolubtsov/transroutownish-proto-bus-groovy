@@ -84,7 +84,16 @@ $ ./gradlew build && \
 ...
 ```
 
-**TBD** :cd:
+Or **build** the microservice using **GNU Make** (optional, but for convenience &mdash; it covers the same **Gradle Wrapper** build workflow under the hood):
+
+```
+$ make clean
+...
+$ make      # <== Compilation phase.
+...
+$ make all  # <== Assembling distributions of the microservice.
+...
+```
 
 ## Running
 
@@ -105,8 +114,6 @@ $ # Whilst this is not necessary, it's beneficial knowing the exit code.
 $ ./bus/build/bus/bin/bus; echo $?
 ...
 ```
-
-**TBD** :cd:
 
 ## Consuming
 
