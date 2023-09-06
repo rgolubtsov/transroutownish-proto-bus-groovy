@@ -88,11 +88,10 @@ Or **build** the microservice using **GNU Make** (optional, but for convenience 
 
 ```
 $ make clean
-...
+$
 $ make      # <== Compilation phase.
-...
+$
 $ make all  # <== Assembling distributions of the microservice.
-...
 ```
 
 ## Running

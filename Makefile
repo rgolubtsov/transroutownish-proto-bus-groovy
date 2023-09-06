@@ -17,6 +17,7 @@ VERSION = 0.0.1
 
 # Specify flags and other vars here.
 GRADLE_W = ./gradlew
+G_WFLAGS = -q
 EXPORT   = export
 MV       = mv
 TAR      = tar
@@ -26,11 +27,11 @@ UNSET    = unset
 
 # Making the first target (JVM classes).
 $(SERV):
-	$(GRADLE_W) compileGroovy
+	$(GRADLE_W) $(G_WFLAGS) compileGroovy
 
 # Making the second target (TAR/ZIP distributions).
 $(DISTS):
-	$(GRADLE_W) build && \
+	$(GRADLE_W) $(G_WFLAGS) build && \
 	$(EXPORT) TARGET=$(SERV) VERSION=$(VERSION) && \
 	if [ ! -d $${TARGET}/bus ]; then \
 	    $(TAR) $(TARFLAGS) $(DISTS)/bus-$${VERSION}.$(TAR) $(TARFLAGC) $${TARGET} && \
@@ -42,6 +43,6 @@ $(DISTS):
 all: $(DISTS)
 
 clean:
-	$(GRADLE_W) clean
+	$(GRADLE_W) $(G_WFLAGS) clean
 
 # vim:set nu ts=4 sw=4:
