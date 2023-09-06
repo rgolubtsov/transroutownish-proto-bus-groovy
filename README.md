@@ -107,7 +107,7 @@ $ # Whilst this is not necessary, it's beneficial knowing the exit code.
 ...
 ```
 
-**Run** the microservice using its startup script from the extracted all-in-one TAR distribution bundle, assembled previously by the `build` target:
+**Run** the microservice using its startup script from the extracted all-in-one TAR distribution bundle, assembled previously by the `build` (or `all`) target:
 
 ```
 $ ./bus/build/bus/bin/bus; echo $?
