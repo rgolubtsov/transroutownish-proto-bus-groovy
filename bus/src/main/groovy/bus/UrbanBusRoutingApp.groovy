@@ -13,12 +13,23 @@
 
 package com.transroutownish.proto.bus
 
+/**
+ * The startup class of the daemon.
+ *
+ * @version 0.0.1
+ * @since   0.0.1
+ */
 class UrbanBusRoutingApp {
     String getTransroutownish() {
         return '=== Trans-RoutE-Townish (Groovy port)'
     }
 
-    static void main(String[] args) {
+    /**
+     * The microservice entry point.
+     *
+     * @param args The array of command-line arguments.
+     */
+    static void main(final String[] args) {
         println new UrbanBusRoutingApp().transroutownish
     }
 }
