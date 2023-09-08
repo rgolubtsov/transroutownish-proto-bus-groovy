@@ -20,6 +20,9 @@ package com.transroutownish.proto.bus
  * @since   0.0.1
  */
 class UrbanBusRoutingApp {
+    /** The application properties object. */
+    static Properties props
+
     String getTransroutownish() {
         return '=== Trans-RoutE-Townish (Groovy port)'
     }
@@ -30,7 +33,17 @@ class UrbanBusRoutingApp {
      * @param args The array of command-line arguments.
      */
     static void main(final String[] args) {
+        // Getting the application properties object.
+        def props = _get_props()
+
+//      println props
+
         println new UrbanBusRoutingApp().transroutownish
+    }
+
+    // Helper method. Used to get the application properties object.
+    static final Properties _get_props() {
+        def props = new Properties()
     }
 }
 
