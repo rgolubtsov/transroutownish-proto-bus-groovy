@@ -23,12 +23,18 @@ class UrbanBusRoutingHelper {
     // Helper constants.
     static final String EMPTY_STRING = ""
 
+    // Extra helper constants.
+    static final String YES = "yes"
+
     // Common error messages.
     static final String ERR_APP_PROPS_UNABLE_TO_GET
         = "Unable to get application properties."
 
     /** The application properties filename. */
     static final String APP_PROPS = "application.properties"
+
+    // Application properties keys for the logger.
+    static final String DEBUG_LOG_ENABLED = "logger.debug.enabled"
 
     // Application properties keys for the routes data store.
     static final String PATH_PREFIX = "routes.datastore.path.prefix"
@@ -56,6 +62,21 @@ class UrbanBusRoutingHelper {
         if (datastore.isEmpty()) { return null }
 
         return datastore
+    }
+
+    /**
+     * Identifies whether debug logging is enabled by retrieving
+     * the corresponding setting from application properties.
+     *
+     * @return <code>true</code> if debug logging is enabled,
+     *         <code>false</code> otherwise.
+     */
+    static boolean is_debug_log_enabled() {
+        def debug_log_enabled
+            = UrbanBusRoutingApp.props.getProperty(DEBUG_LOG_ENABLED)
+
+        if ((debug_log_enabled !== null)
+            && (debug_log_enabled == YES)) { return true }
     }
 
     // Helper method. Used to get the application properties object.
