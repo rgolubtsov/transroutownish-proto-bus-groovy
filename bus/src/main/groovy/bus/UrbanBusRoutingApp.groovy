@@ -25,10 +25,6 @@ class UrbanBusRoutingApp {
     /** The application properties object. */
     static Properties props
 
-    String getTransroutownish() {
-        return '=== Trans-RoutE-Townish (Groovy port)'
-    }
-
     /**
      * The microservice entry point.
      *
@@ -36,11 +32,15 @@ class UrbanBusRoutingApp {
      */
     static void main(final String[] args) {
         // Getting the application properties object.
-        def props = _get_props()
+        props = _get_props()
 
 //      println props
 
-        println new UrbanBusRoutingApp().transroutownish
+        // Getting the path and filename of the routes data store
+        // from application properties.
+        def datastore = get_routes_datastore()
+
+        println datastore
     }
 }
 
