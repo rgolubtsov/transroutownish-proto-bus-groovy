@@ -44,6 +44,23 @@ class UrbanBusRoutingApp {
     // Helper method. Used to get the application properties object.
     static final Properties _get_props() {
         def props = new Properties()
+
+        def loader = UrbanBusRoutingApp.class.getClassLoader()
+
+//      println loader
+
+        def data = loader.getResourceAsStream("application.properties")
+
+//      println data
+
+        try {
+            props.load(data)
+            data.close()
+        } catch (IOException e) {
+            println e
+        }
+
+        return props
     }
 }
 
