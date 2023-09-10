@@ -25,6 +25,9 @@ class UrbanBusRoutingApp {
     /** The application properties object. */
     static Properties props
 
+    /** The debug logging enabler. */
+    static boolean debug_log_enabled
+
     /**
      * The microservice entry point.
      *
@@ -41,6 +44,11 @@ class UrbanBusRoutingApp {
         def datastore = get_routes_datastore()
 
         println datastore
+
+        // Identifying whether debug logging is enabled.
+        debug_log_enabled = is_debug_log_enabled()
+
+        println debug_log_enabled
     }
 }
 
