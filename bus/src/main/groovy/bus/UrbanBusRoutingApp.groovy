@@ -13,6 +13,11 @@
 
 package com.transroutownish.proto.bus
 
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
+
+import java.lang.invoke.MethodHandles
+
 import static com.transroutownish.proto.bus.UrbanBusRoutingHelper.*
 
 /**
@@ -22,6 +27,10 @@ import static com.transroutownish.proto.bus.UrbanBusRoutingHelper.*
  * @since   0.0.1
  */
 class UrbanBusRoutingApp {
+    /** The SLF4J logger. */
+    static final Logger l = LoggerFactory.getLogger(
+        MethodHandles.lookup().lookupClass())
+
     /** The application properties object. */
     static Properties props
 
@@ -37,18 +46,16 @@ class UrbanBusRoutingApp {
         // Getting the application properties object.
         props = _get_props()
 
-//      println props
-
         // Getting the path and filename of the routes data store
         // from application properties.
         def datastore = get_routes_datastore()
 
-        println datastore
+        l.info datastore
 
         // Identifying whether debug logging is enabled.
         debug_log_enabled = is_debug_log_enabled()
 
-        println debug_log_enabled
+        l.info BRACES, debug_log_enabled
     }
 }
 

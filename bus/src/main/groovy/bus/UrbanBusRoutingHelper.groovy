@@ -13,6 +13,11 @@
 
 package com.transroutownish.proto.bus
 
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
+
+import java.lang.invoke.MethodHandles
+
 /**
  * The helper class for the daemon.
  *
@@ -21,7 +26,8 @@ package com.transroutownish.proto.bus
  */
 class UrbanBusRoutingHelper {
     // Helper constants.
-    static final String EMPTY_STRING = ""
+    static final String EMPTY_STRING =   ""
+    static final String BRACES       = "{}"
 
     // Extra helper constants.
     static final String YES = "yes"
@@ -40,6 +46,10 @@ class UrbanBusRoutingHelper {
     static final String PATH_PREFIX = "routes.datastore.path.prefix"
     static final String PATH_DIR    = "routes.datastore.path.dir"
     static final String FILENAME    = "routes.datastore.filename"
+
+    /** The SLF4J logger. */
+    static final Logger l = LoggerFactory.getLogger(
+        MethodHandles.lookup().lookupClass())
 
     /**
      * Retrieves the path and filename of the routes data store
@@ -91,7 +101,7 @@ class UrbanBusRoutingHelper {
             props.load(data)
             data.close()
         } catch (IOException e) {
-            println ERR_APP_PROPS_UNABLE_TO_GET
+            l.error ERR_APP_PROPS_UNABLE_TO_GET
         }
 
         return props
