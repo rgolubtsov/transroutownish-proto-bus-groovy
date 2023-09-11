@@ -31,6 +31,9 @@ dependencies {
 
     // This dependency is used by the application.
     implementation 'com.google.guava:guava:32.1.2-jre'
+
+    // SLF4J Reload4j Provider - to utilize SLF4J logger using Log4j.
+    implementation 'org.slf4j:slf4j-reload4j:2.0.9'
 }
 
 // Apply a specific Java toolchain to ease working on different environments.
