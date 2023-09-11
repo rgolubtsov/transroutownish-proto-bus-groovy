@@ -1,7 +1,7 @@
 /*
  * bus/src/main/groovy/bus/UrbanBusRoutingHelper.groovy
  * ============================================================================
- * Urban bus routing microservice prototype (Groovy port). Version 0.0.1
+ * Urban bus routing microservice prototype (Groovy port). Version 0.0.5
  * ============================================================================
  * A daemon written in Groovy, designed and intended to be run
  * as a microservice, implementing a simple urban bus routing prototype.
@@ -13,15 +13,21 @@
 
 package com.transroutownish.proto.bus
 
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
+
+import java.lang.invoke.MethodHandles
+
 /**
  * The helper class for the daemon.
  *
- * @version 0.0.1
+ * @version 0.0.5
  * @since   0.0.1
  */
 class UrbanBusRoutingHelper {
     // Helper constants.
-    static final String EMPTY_STRING = ""
+    static final String EMPTY_STRING =   ""
+    static final String BRACES       = "{}"
 
     // Extra helper constants.
     static final String YES = "yes"
@@ -40,6 +46,10 @@ class UrbanBusRoutingHelper {
     static final String PATH_PREFIX = "routes.datastore.path.prefix"
     static final String PATH_DIR    = "routes.datastore.path.dir"
     static final String FILENAME    = "routes.datastore.filename"
+
+    /** The SLF4J logger. */
+    static final Logger l = LoggerFactory.getLogger(
+        MethodHandles.lookup().lookupClass())
 
     /**
      * Retrieves the path and filename of the routes data store
@@ -91,7 +101,7 @@ class UrbanBusRoutingHelper {
             props.load(data)
             data.close()
         } catch (IOException e) {
-            println ERR_APP_PROPS_UNABLE_TO_GET
+            l.error ERR_APP_PROPS_UNABLE_TO_GET
         }
 
         return props

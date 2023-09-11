@@ -1,7 +1,7 @@
 #
 # .gitignore
 # =============================================================================
-# Urban bus routing microservice prototype (Groovy port). Version 0.0.1
+# Urban bus routing microservice prototype (Groovy port). Version 0.0.5
 # =============================================================================
 # A daemon written in Groovy, designed and intended to be run
 # as a microservice, implementing a simple urban bus routing prototype.
@@ -15,5 +15,8 @@
 
 # === JVM classes =============================================================
 build/
+
+# === Log files ===============================================================
+log/
 
 # vim:set nu et ts=4 sw=4:
