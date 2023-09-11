@@ -1,7 +1,7 @@
 /*
  * bus/src/main/groovy/bus/UrbanBusRoutingApp.groovy
  * ============================================================================
- * Urban bus routing microservice prototype (Groovy port). Version 0.0.1
+ * Urban bus routing microservice prototype (Groovy port). Version 0.0.5
  * ============================================================================
  * A daemon written in Groovy, designed and intended to be run
  * as a microservice, implementing a simple urban bus routing prototype.
@@ -23,7 +23,7 @@ import static com.transroutownish.proto.bus.UrbanBusRoutingHelper.*
 /**
  * The startup class of the daemon.
  *
- * @version 0.0.1
+ * @version 0.0.5
  * @since   0.0.1
  */
 class UrbanBusRoutingApp {

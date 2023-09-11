@@ -76,7 +76,7 @@ $ ./gradlew clean
 $ ./gradlew compileGroovy
 ...
 $ ./gradlew build && \
-  export TARGET=bus/build VERSION=0.0.1 && \
+  export TARGET=bus/build VERSION=0.0.5 && \
   if [ ! -d ${TARGET}/bus ]; then \
       tar -xf ${TARGET}/distributions/bus-${VERSION}.tar -C ${TARGET} && \
       mv ${TARGET}/bus-${VERSION} ${TARGET}/bus; \
