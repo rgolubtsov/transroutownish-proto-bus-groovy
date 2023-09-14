@@ -50,12 +50,12 @@ class UrbanBusRoutingApp {
         // from application properties.
         def datastore = get_routes_datastore()
 
-        l.info datastore
+        l.debug datastore
 
         // Identifying whether debug logging is enabled.
         debug_log_enabled = is_debug_log_enabled()
 
-        l.info BRACES, debug_log_enabled
+        l.debug BRACES, debug_log_enabled
     }
 }
 
