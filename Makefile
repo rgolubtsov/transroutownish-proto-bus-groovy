@@ -1,7 +1,7 @@
 #
 # Makefile
 # =============================================================================
-# Urban bus routing microservice prototype (Groovy port). Version 0.0.8
+# Urban bus routing microservice prototype (Groovy port). Version 0.0.9
 # =============================================================================
 # A daemon written in Groovy, designed and intended to be run
 # as a microservice, implementing a simple urban bus routing prototype.
@@ -13,7 +13,7 @@
 
 SERV    = bus/build
 DISTS   = $(SERV)/distributions
-VERSION = 0.0.8
+VERSION = 0.0.9
 
 # Specify flags and other vars here.
 GRADLE_W = ./gradlew
