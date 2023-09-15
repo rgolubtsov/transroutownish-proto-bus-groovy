@@ -35,6 +35,12 @@ dependencies {
     // SLF4J Reload4j Provider - to utilize SLF4J logger using Log4j.
     implementation 'org.slf4j:slf4j-reload4j:2.0.9'
     implementation 'ch.qos.reload4j:reload4j:1.2.25' // <== Not v1.2.22 JAR !
+
+    // Syslog4j Graylog2 - to log messages through the Unix system logger.
+    implementation 'org.graylog2:syslog4j:0.9.61'
+
+    // JNA (Java Native Access) - as a runtime dependency to Syslog4j.
+    implementation 'net.java.dev.jna:jna:5.13.0'
 }
 
 // Apply a specific Java toolchain to ease working on different environments.
