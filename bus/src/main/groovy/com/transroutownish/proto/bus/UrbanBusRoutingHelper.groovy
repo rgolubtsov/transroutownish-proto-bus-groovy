@@ -26,8 +26,8 @@ import java.lang.invoke.MethodHandles
  */
 class UrbanBusRoutingHelper {
     // Helper constants.
-    static final String EMPTY_STRING =   ""
-    static final String BRACES       = "{}"
+    static final String EMPTY_STRING =  ""
+    static final String SPACE        = " "
 
     // Extra helper constants.
     static final String YES = "yes"
@@ -35,6 +35,8 @@ class UrbanBusRoutingHelper {
     // Common error messages.
     static final String ERR_APP_PROPS_UNABLE_TO_GET
         = "Unable to get application properties."
+    static final String ERR_DATASTORE_NOT_FOUND
+        = "FATAL: Data store file not found. Quitting..."
 
     /** The application properties filename. */
     static final String APP_PROPS = "application.properties"

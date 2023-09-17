@@ -31,6 +31,16 @@ import static com.transroutownish.proto.bus.UrbanBusRoutingHelper.*
  * @since   0.0.1
  */
 class UrbanBusRoutingApp {
+    /** The path and filename of the sample routes data store. */
+    static final String SAMPLE_ROUTES = "./data/routes.txt"
+
+    /**
+     * The regex pattern for the element to be excluded
+     * from a bus stops sequence: it is an arbitrary identifier
+     * of a route, which is not used in the routes processing anyhow.
+     */
+    static final String ROUTE_ID_REGEX = /^\d+/
+
     /** The SLF4J logger. */
     static final Logger l = LoggerFactory.getLogger(
         MethodHandles.lookup().lookupClass())
@@ -41,6 +51,9 @@ class UrbanBusRoutingApp {
     /** The application properties object. */
     static Properties props
 
+    /** The list, containing all available routes. */
+    static List routes_list
+
     /** The debug logging enabler. */
     static boolean debug_log_enabled
 
@@ -50,12 +63,33 @@ class UrbanBusRoutingApp {
      * @param args The array of command-line arguments.
      */
     static void main(final String[] args) {
+        def routes = null
+
         // Getting the application properties object.
         props = _get_props()
 
         // Getting the path and filename of the routes data store
         // from application properties.
         def datastore = get_routes_datastore()
+
+        if (datastore === null) { datastore = SAMPLE_ROUTES }
+
+        def data = new File(datastore)
+
+        try {
+            routes = new Scanner(data)
+        } catch (FileNotFoundException e) {
+            l.error ERR_DATASTORE_NOT_FOUND
+        }
+
+        routes_list = []
+
+        while (routes.hasNextLine()) {
+            routes_list << routes.nextLine()
+                .replaceFirst(ROUTE_ID_REGEX, EMPTY_STRING) + SPACE
+        }
+
+        routes.close()
 
         // Identifying whether debug logging is enabled.
         debug_log_enabled = is_debug_log_enabled()
@@ -66,11 +100,8 @@ class UrbanBusRoutingApp {
         cfg.setIdent(null); cfg.setFacility(SyslogIF.FACILITY_DAEMON)
         s = new UnixSyslog(); s.initialize (SyslogIF.UNIX_SYSLOG,cfg)
 
-        l.debug datastore
-        s.debug datastore
-
-        l.debug "$debug_log_enabled"
-        s.debug "$debug_log_enabled"
+        l.debug "$routes_list"
+        s.debug "$routes_list"
 
         // Closing the system logger.
         // Calling <syslog.h> closelog();
