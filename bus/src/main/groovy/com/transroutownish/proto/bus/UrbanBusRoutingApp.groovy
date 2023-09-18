@@ -103,6 +103,17 @@ class UrbanBusRoutingApp {
         l.debug "$routes_list"
         s.debug "$routes_list"
 
+/*
+        RatpackServer.of(srvSpec ->
+                         srvSpec.serverConfig(ServerConfig.embedded())
+             .registryOf(regSpec ->
+                         regSpec.add(String.class, EMPTY_STRING))
+               .handlers(chain   ->
+                         chain.get("$REST_PREFIX$SLASH$REST_DIRECT",
+                         ctx     ->
+                         ctx.render(null))
+*/
+
         // Closing the system logger.
         // Calling <syslog.h> closelog();
         s.shutdown()
