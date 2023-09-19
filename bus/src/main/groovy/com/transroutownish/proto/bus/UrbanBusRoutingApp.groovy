@@ -1,5 +1,5 @@
 /*
- * bus/src/main/groovy/bus/UrbanBusRoutingApp.groovy
+ * bus/src/main/groovy/com/transroutownish/proto/bus/UrbanBusRoutingApp.groovy
  * ============================================================================
  * Urban bus routing microservice prototype (Groovy port). Version 0.0.9
  * ============================================================================
