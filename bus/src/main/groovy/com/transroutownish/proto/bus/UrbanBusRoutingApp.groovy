@@ -13,14 +13,9 @@
 
 package com.transroutownish.proto.bus
 
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
-
 import org.graylog2.syslog4j.impl.unix.UnixSyslog
 import org.graylog2.syslog4j.impl.unix.UnixSyslogConfig
 import org.graylog2.syslog4j.SyslogIF
-
-import java.lang.invoke.MethodHandles
 
 import static com.transroutownish.proto.bus.UrbanBusRoutingHelper.*
 
@@ -41,21 +36,14 @@ class UrbanBusRoutingApp {
      */
     static final String ROUTE_ID_REGEX = /^\d+/
 
-    /** The SLF4J logger. */
-    static final Logger l = LoggerFactory.getLogger(
-        MethodHandles.lookup().lookupClass())
-
-    /** The Unix system logger. */
-    static UnixSyslog s
-
     /** The application properties object. */
     static Properties props
 
     /** The list, containing all available routes. */
     static List routes_list
 
-    /** The debug logging enabler. */
-    static boolean debug_log_enabled
+    /** The Unix system logger. */
+    static UnixSyslog s
 
     /**
      * The microservice entry point.
@@ -63,10 +51,15 @@ class UrbanBusRoutingApp {
      * @param args The array of command-line arguments.
      */
     static void main(final String[] args) {
-        def routes = null
-
         // Getting the application properties object.
         props = _get_props()
+
+        // Getting the port number used to run the server,
+        // from application properties.
+        def server_port = get_server_port()
+
+        // Identifying whether debug logging is enabled.
+        def debug_log_enabled = is_debug_log_enabled()
 
         // Getting the path and filename of the routes data store
         // from application properties.
@@ -76,13 +69,17 @@ class UrbanBusRoutingApp {
 
         def data = new File(datastore)
 
+        def routes = null
+
         try {
             routes = new Scanner(data)
         } catch (FileNotFoundException e) {
             l.error ERR_DATASTORE_NOT_FOUND
+
+            System.exit(EXIT_FAILURE)
         }
 
-        routes_list = []
+        routes_list = [] // <== Like routes_list = new ArrayList();
 
         while (routes.hasNextLine()) {
             routes_list << routes.nextLine()
@@ -91,28 +88,19 @@ class UrbanBusRoutingApp {
 
         routes.close()
 
-        // Identifying whether debug logging is enabled.
-        debug_log_enabled = is_debug_log_enabled()
-
         // Opening the system logger.
         // Calling <syslog.h> openlog(NULL, LOG_CONS | LOG_PID, LOG_DAEMON);
         def cfg = new UnixSyslogConfig()
         cfg.setIdent(null); cfg.setFacility(SyslogIF.FACILITY_DAEMON)
         s = new UnixSyslog(); s.initialize (SyslogIF.UNIX_SYSLOG,cfg)
 
-        l.debug "$routes_list"
-        s.debug "$routes_list"
-
-/*
-        RatpackServer.of(srvSpec ->
-                         srvSpec.serverConfig(ServerConfig.embedded())
-             .registryOf(regSpec ->
-                         regSpec.add(String.class, EMPTY_STRING))
-               .handlers(chain   ->
-                         chain.get("$REST_PREFIX$SLASH$REST_DIRECT",
-                         ctx     ->
-                         ctx.render(null))
-*/
+        // Starting up the bundled web server.
+        new UrbanBusRoutingController().startup([
+            server_port,
+            debug_log_enabled,
+            routes_list,
+            s // <== The Unix system logger (like in Clojure port).
+        ])
 
         // Closing the system logger.
         // Calling <syslog.h> closelog();
