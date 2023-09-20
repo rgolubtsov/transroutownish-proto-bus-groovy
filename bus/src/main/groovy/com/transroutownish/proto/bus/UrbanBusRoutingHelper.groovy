@@ -31,6 +31,7 @@ class UrbanBusRoutingHelper {
     static final int    EXIT_SUCCESS =   0 // Successful exit status.
     static final String EMPTY_STRING =  ""
     static final String SPACE        = " "
+    static final String SLASH        = "/"
 
     // Extra helper constants.
     static final String YES = "yes"
