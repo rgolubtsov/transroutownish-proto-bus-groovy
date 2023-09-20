@@ -1,7 +1,7 @@
 /*
  * bus/build.gradle
  * ============================================================================
- * Urban bus routing microservice prototype (Groovy port). Version 0.0.9
+ * Urban bus routing microservice prototype (Groovy port). Version 0.1.0
  * ============================================================================
  * A daemon written in Groovy, designed and intended to be run
  * as a microservice, implementing a simple urban bus routing prototype.
@@ -41,6 +41,9 @@ dependencies {
 
     // JNA (Java Native Access) - as a runtime dependency to Syslog4j.
     implementation 'net.java.dev.jna:jna:5.13.0'
+
+    // Ratpack - to set up and run a Netty-based web server.
+    implementation 'io.ratpack:ratpack-core:1.10.0-milestone-25'
 }
 
 // Apply a specific Java toolchain to ease working on different environments.
@@ -65,7 +68,7 @@ jar {
 -----------------------------------------------------------------------------*/
 
 group       = 'com.transroutownish.proto'
-version     = '0.0.9'
+version     = '0.1.0'
 description = 'Urban bus routing microservice prototype.'
 
 // vim:set nu et ts=4 sw=4:
