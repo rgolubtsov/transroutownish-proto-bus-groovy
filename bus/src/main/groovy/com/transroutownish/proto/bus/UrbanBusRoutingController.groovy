@@ -19,7 +19,9 @@ import org.slf4j.LoggerFactory
 
 import java.lang.invoke.MethodHandles
 
-//import static com.transroutownish.proto.bus.UrbanBusRoutingHelper.*
+import ratpack.server.RatpackServer
+
+import static com.transroutownish.proto.bus.UrbanBusRoutingHelper.*
 
 /**
  * The controller class of the daemon.
@@ -28,6 +30,10 @@ import java.lang.invoke.MethodHandles
  * @since   0.0.9
  */
 class UrbanBusRoutingController {
+    // Helper constants.
+    static final String REST_PREFIX = "route"
+    static final String REST_DIRECT = "direct"
+
     /** The SLF4J logger. */
     static final Logger l = LoggerFactory.getLogger(
         MethodHandles.lookup().lookupClass())
@@ -44,25 +50,32 @@ class UrbanBusRoutingController {
         def routes_list       = args[2]
         def s                 = args[3]
 
-//      l.debug "$server_port"
-//      s.debug "$server_port"
-
 //      l.debug "$debug_log_enabled"
 //      s.debug "$debug_log_enabled"
 
 //      l.debug "$routes_list"
 //      s.debug "$routes_list"
 
-/*
-        RatpackServer.of(srvSpec ->
-                         srvSpec.serverConfig(ServerConfig.embedded())
-             .registryOf(regSpec ->
-                         regSpec.add(String.class, EMPTY_STRING))
-               .handlers(chain   ->
-                         chain.get("$REST_PREFIX$SLASH$REST_DIRECT",
-                         ctx     ->
-                         ctx.render(null))
-*/
+        // Creating the Ratpack web server based on the configuration provided.
+        def server = RatpackServer.of(
+            srvSpec     ->
+            srvSpec.serverConfig(
+                srvConf ->
+                srvConf.port(server_port)
+            ).registryOf(
+                regSpec ->
+                regSpec.add(String.class, EMPTY_STRING)
+            ).handlers(
+                chain   ->
+                chain.get("$REST_PREFIX$SLASH$REST_DIRECT",
+                    ctx ->
+                    ctx.render(null)
+                )
+            )
+        )
+
+        // Starting up the Ratpack web server.
+        server.start()
     }
 }
 
