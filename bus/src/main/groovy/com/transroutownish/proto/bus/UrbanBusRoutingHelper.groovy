@@ -2,7 +2,7 @@
  * bus/src/main/groovy/com/transroutownish/proto/bus/
  * UrbanBusRoutingHelper.groovy
  * ============================================================================
- * Urban bus routing microservice prototype (Groovy port). Version 0.1.0
+ * Urban bus routing microservice prototype (Groovy port). Version 0.1.2
  * ============================================================================
  * A daemon written in Groovy, designed and intended to be run
  * as a microservice, implementing a simple urban bus routing prototype.
@@ -22,7 +22,7 @@ import java.lang.invoke.MethodHandles
 /**
  * The helper class for the daemon.
  *
- * @version 0.1.0
+ * @version 0.1.2
  * @since   0.0.1
  */
 class UrbanBusRoutingHelper {
@@ -45,6 +45,10 @@ class UrbanBusRoutingHelper {
         = "Unable to get application properties."
     static final String ERR_DATASTORE_NOT_FOUND
         = "FATAL: Data store file not found. Quitting..."
+
+    // Common notification messages.
+    static final String MSG_SERVER_STARTED = "Server started on port "
+    static final String MSG_SERVER_STOPPED = "Server stopped"
 
     /** The application properties filename. */
     static final String APP_PROPS = "application.properties"
