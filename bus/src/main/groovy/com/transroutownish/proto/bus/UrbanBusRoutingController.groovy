@@ -104,8 +104,6 @@ class UrbanBusRoutingController {
 //      l.debug "$routes_list"
 //      s.debug "$routes_list"
 
-        def service = new UrbanBusRoutingService()
-
         // Creating the Ratpack web server based on the configuration provided.
         def server = RatpackServer.of(
             srvSpec     ->
@@ -114,14 +112,14 @@ class UrbanBusRoutingController {
                 srvConf.props(UrbanBusRoutingApp.props)
             ).registryOf(
                 regSpec ->
-                regSpec.add(service)
+                regSpec.add(new UrbanBusRoutingService())
                        .add(server_port)
                        .add(syslog)
             ).handlers(
                 chain   ->
                 chain.get("$REST_PREFIX$SLASH$REST_DIRECT",
                     ctx ->
-                    ctx.render(null)
+                    ctx.render("Not yet implemented.")
                 )
             )
         )
