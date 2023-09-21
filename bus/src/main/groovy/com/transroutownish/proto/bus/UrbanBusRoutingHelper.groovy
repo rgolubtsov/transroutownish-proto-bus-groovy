@@ -46,6 +46,10 @@ class UrbanBusRoutingHelper {
     static final String ERR_DATASTORE_NOT_FOUND
         = "FATAL: Data store file not found. Quitting..."
 
+    // Common notification messages.
+    static final String MSG_SERVER_STARTED = "Server started on port "
+    static final String MSG_SERVER_STOPPED = "Server stopped"
+
     /** The application properties filename. */
     static final String APP_PROPS = "application.properties"
 
