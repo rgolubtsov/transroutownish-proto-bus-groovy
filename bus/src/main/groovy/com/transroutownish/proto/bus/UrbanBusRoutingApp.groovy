@@ -101,10 +101,6 @@ class UrbanBusRoutingApp {
             routes_list,
             s // <== The Unix system logger (like in Clojure port).
         ])
-
-        // Closing the system logger.
-        // Calling <syslog.h> closelog();
-        s.shutdown()
     }
 }
 
