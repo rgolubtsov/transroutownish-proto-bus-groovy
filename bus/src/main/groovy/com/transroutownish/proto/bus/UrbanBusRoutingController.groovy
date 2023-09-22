@@ -27,6 +27,8 @@ import ratpack.service.StopEvent
 
 import ratpack.server.RatpackServer
 
+import ratpack.http.Status
+
 import static com.transroutownish.proto.bus.UrbanBusRoutingHelper.*
 
 /**
@@ -36,10 +38,6 @@ import static com.transroutownish.proto.bus.UrbanBusRoutingHelper.*
  * @since   0.0.9
  */
 class UrbanBusRoutingController {
-    // Helper constants.
-    static final String REST_PREFIX = "route"
-    static final String REST_DIRECT = "direct"
-
     /** The SLF4J logger. */
     static final Logger l = LoggerFactory.getLogger(
         MethodHandles.lookup().lookupClass())
@@ -116,10 +114,12 @@ class UrbanBusRoutingController {
                        .add(server_port)
                        .add(syslog)
             ).handlers(
-                chain   ->
+                chain   -> // GET /route/direct
                 chain.get("$REST_PREFIX$SLASH$REST_DIRECT",
                     ctx ->
-                    ctx.render("Not yet implemented.")
+                    ctx.getResponse()
+                       .status(Status.OK)
+                       .send(MIME_TYPE, ERR_NOT_YET_IMPLEMENTED)
                 )
             )
         )
