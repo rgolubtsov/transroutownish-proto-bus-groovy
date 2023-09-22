@@ -45,6 +45,8 @@ class UrbanBusRoutingHelper {
         = "Unable to get application properties."
     static final String ERR_DATASTORE_NOT_FOUND
         = "FATAL: Data store file not found. Quitting..."
+    static final String ERR_NOT_YET_IMPLEMENTED
+        = '{"error":"Not yet implemented."}'
 
     // Common notification messages.
     static final String MSG_SERVER_STARTED = "Server started on port "
@@ -72,6 +74,13 @@ class UrbanBusRoutingHelper {
     static final String PATH_PREFIX = "routes.datastore.path.prefix"
     static final String PATH_DIR    = "routes.datastore.path.dir"
     static final String FILENAME    = "routes.datastore.filename"
+
+    // REST URI path-related constants.
+    static final String REST_PREFIX = "route"
+    static final String REST_DIRECT = "direct"
+
+    // HTTP response-related constants.
+    static final String MIME_TYPE = "application/json"
 
     /** The SLF4J logger. */
     static final Logger l = LoggerFactory.getLogger(
