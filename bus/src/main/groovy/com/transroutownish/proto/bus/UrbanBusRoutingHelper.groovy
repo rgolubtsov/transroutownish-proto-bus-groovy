@@ -45,6 +45,12 @@ class UrbanBusRoutingHelper {
         = "Unable to get application properties."
     static final String ERR_DATASTORE_NOT_FOUND
         = "FATAL: Data store file not found. Quitting..."
+    static final String ERR_CANNOT_START_SERVER
+        = "FATAL: Cannot start server "
+    static final String ERR_ADDR_ALREADY_IN_USE
+        = "due to address requested already in use. Quitting..."
+    static final String ERR_SERV_UNKNOWN_REASON
+        = "for an unknown reason. Quitting..."
     static final String ERR_NOT_YET_IMPLEMENTED
         = '{"error":"Not yet implemented."}'
 
