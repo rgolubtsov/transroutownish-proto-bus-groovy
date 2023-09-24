@@ -124,8 +124,12 @@ class UrbanBusRoutingController {
             )
         )
 
-        // Starting up the Ratpack web server.
-        server.start()
+        try {
+            // Starting up the Ratpack web server.
+            server.start()
+        } catch (Exception e) {
+            l.error e.getMessage()
+        }
     }
 }
 
