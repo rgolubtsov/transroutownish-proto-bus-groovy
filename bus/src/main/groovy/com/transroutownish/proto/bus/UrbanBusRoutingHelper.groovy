@@ -53,6 +53,7 @@ class UrbanBusRoutingHelper {
         = "for an unknown reason. Quitting..."
     static final String ERR_NOT_YET_IMPLEMENTED
         = '{"error":"Not yet implemented."}'
+    static final int    ERR_EADDRINUSE_NEGATIVE = -98
 
     // Common notification messages.
     static final String MSG_SERVER_STARTED = "Server started on port "
