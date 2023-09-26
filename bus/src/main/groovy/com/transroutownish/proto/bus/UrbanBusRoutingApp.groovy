@@ -74,7 +74,7 @@ class UrbanBusRoutingApp {
         try {
             routes = new Scanner(data)
         } catch (FileNotFoundException e) {
-            l.error ERR_DATASTORE_NOT_FOUND
+            l.error(ERR_DATASTORE_NOT_FOUND)
 
             System.exit(EXIT_FAILURE)
         }

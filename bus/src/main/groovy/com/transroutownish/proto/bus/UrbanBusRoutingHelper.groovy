@@ -110,10 +110,10 @@ class UrbanBusRoutingHelper {
             if ((server_port >= MIN_PORT) && (server_port <= MAX_PORT)) {
                 return server_port
             } else {
-                l.error ERR_PORT_VALID_MUST_BE_POSITIVE_INT; return DEF_PORT
+                l.error(ERR_PORT_VALID_MUST_BE_POSITIVE_INT); return DEF_PORT
             }
         } else {
-            l.error ERR_PORT_VALID_MUST_BE_POSITIVE_INT; return DEF_PORT
+            l.error(ERR_PORT_VALID_MUST_BE_POSITIVE_INT); return DEF_PORT
         }
     }
 
@@ -167,7 +167,7 @@ class UrbanBusRoutingHelper {
             props.load(data)
             data.close()
         } catch (IOException e) {
-            l.error ERR_APP_PROPS_UNABLE_TO_GET
+            l.error(ERR_APP_PROPS_UNABLE_TO_GET)
         }
 
         return props

@@ -60,8 +60,8 @@ class UrbanBusRoutingController {
             def s = registry.get(UnixSyslog)
             def server_port = registry.get(Integer)
 
-            l.info "$MSG_SERVER_STARTED$server_port"
-            s.info "$MSG_SERVER_STARTED$server_port"
+            l.info(MSG_SERVER_STARTED + server_port)
+            s.info(MSG_SERVER_STARTED + server_port)
         }
 
         /**
@@ -74,8 +74,8 @@ class UrbanBusRoutingController {
 
             def s = registry.get(UnixSyslog)
 
-            l.info MSG_SERVER_STOPPED
-            s.info MSG_SERVER_STOPPED
+            l.info(MSG_SERVER_STOPPED)
+            s.info(MSG_SERVER_STOPPED)
 
             // Closing the system logger.
             // Calling <syslog.h> closelog();
@@ -95,12 +95,6 @@ class UrbanBusRoutingController {
             routes_list,
             syslog
         ) = args
-
-//      l.debug "$debug_log_enabled"
-//      s.debug "$debug_log_enabled"
-
-//      l.debug "$routes_list"
-//      s.debug "$routes_list"
 
         // Creating the Ratpack web server based on the configuration provided.
         def server = RatpackServer.of(
@@ -131,9 +125,9 @@ class UrbanBusRoutingController {
             if ((e instanceof io.netty.channel.unix.Errors.NativeIoException)
                 && (e.expectedErr() === ERR_EADDRINUSE_NEGATIVE)) {
 
-                l.error ERR_CANNOT_START_SERVER + ERR_ADDR_ALREADY_IN_USE
+                l.error(ERR_CANNOT_START_SERVER + ERR_ADDR_ALREADY_IN_USE)
             } else {
-                l.error ERR_CANNOT_START_SERVER + ERR_SERV_UNKNOWN_REASON
+                l.error(ERR_CANNOT_START_SERVER + ERR_SERV_UNKNOWN_REASON)
             }
         }
     }
