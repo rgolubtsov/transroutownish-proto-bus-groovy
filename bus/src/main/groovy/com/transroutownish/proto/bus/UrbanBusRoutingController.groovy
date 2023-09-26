@@ -124,11 +124,17 @@ class UrbanBusRoutingController {
             )
         )
 
+        // Trying to start up the Ratpack web server.
         try {
-            // Starting up the Ratpack web server.
             server.start()
         } catch (Exception e) {
-            l.error e.getMessage()
+            if ((e instanceof io.netty.channel.unix.Errors.NativeIoException)
+                && (e.expectedErr() === ERR_EADDRINUSE_NEGATIVE)) {
+
+                l.error ERR_CANNOT_START_SERVER + ERR_ADDR_ALREADY_IN_USE
+            } else {
+                l.error ERR_CANNOT_START_SERVER + ERR_SERV_UNKNOWN_REASON
+            }
         }
     }
 }
