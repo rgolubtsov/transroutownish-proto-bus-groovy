@@ -2,7 +2,7 @@
  * bus/src/main/groovy/com/transroutownish/proto/bus/
  * UrbanBusRoutingController.groovy
  * ============================================================================
- * Urban bus routing microservice prototype (Groovy port). Version 0.1.2
+ * Urban bus routing microservice prototype (Groovy port). Version 0.1.5
  * ============================================================================
  * A daemon written in Groovy, designed and intended to be run
  * as a microservice, implementing a simple urban bus routing prototype.
@@ -27,19 +27,17 @@ import ratpack.service.StopEvent
 
 import ratpack.server.RatpackServer
 
+import ratpack.http.Status
+
 import static com.transroutownish.proto.bus.UrbanBusRoutingHelper.*
 
 /**
  * The controller class of the daemon.
  *
- * @version 0.1.2
+ * @version 0.1.5
  * @since   0.0.9
  */
 class UrbanBusRoutingController {
-    // Helper constants.
-    static final String REST_PREFIX = "route"
-    static final String REST_DIRECT = "direct"
-
     /** The SLF4J logger. */
     static final Logger l = LoggerFactory.getLogger(
         MethodHandles.lookup().lookupClass())
@@ -62,8 +60,8 @@ class UrbanBusRoutingController {
             def s = registry.get(UnixSyslog)
             def server_port = registry.get(Integer)
 
-            l.info "$MSG_SERVER_STARTED$server_port"
-            s.info "$MSG_SERVER_STARTED$server_port"
+            l.info(MSG_SERVER_STARTED + server_port)
+            s.info(MSG_SERVER_STARTED + server_port)
         }
 
         /**
@@ -76,8 +74,8 @@ class UrbanBusRoutingController {
 
             def s = registry.get(UnixSyslog)
 
-            l.info MSG_SERVER_STOPPED
-            s.info MSG_SERVER_STOPPED
+            l.info(MSG_SERVER_STOPPED)
+            s.info(MSG_SERVER_STOPPED)
 
             // Closing the system logger.
             // Calling <syslog.h> closelog();
@@ -98,12 +96,6 @@ class UrbanBusRoutingController {
             syslog
         ) = args
 
-//      l.debug "$debug_log_enabled"
-//      s.debug "$debug_log_enabled"
-
-//      l.debug "$routes_list"
-//      s.debug "$routes_list"
-
         // Creating the Ratpack web server based on the configuration provided.
         def server = RatpackServer.of(
             srvSpec     ->
@@ -116,16 +108,28 @@ class UrbanBusRoutingController {
                        .add(server_port)
                        .add(syslog)
             ).handlers(
-                chain   ->
+                chain   -> // GET /route/direct
                 chain.get("$REST_PREFIX$SLASH$REST_DIRECT",
                     ctx ->
-                    ctx.render("Not yet implemented.")
+                    ctx.getResponse()
+                       .status(Status.OK)
+                       .send(MIME_TYPE, ERR_NOT_YET_IMPLEMENTED)
                 )
             )
         )
 
-        // Starting up the Ratpack web server.
-        server.start()
+        // Trying to start up the Ratpack web server.
+        try {
+            server.start()
+        } catch (Exception e) {
+            if ((e instanceof io.netty.channel.unix.Errors.NativeIoException)
+                && (e.expectedErr() === ERR_EADDRINUSE_NEGATIVE)) {
+
+                l.error(ERR_CANNOT_START_SERVER + ERR_ADDR_ALREADY_IN_USE)
+            } else {
+                l.error(ERR_CANNOT_START_SERVER + ERR_SERV_UNKNOWN_REASON)
+            }
+        }
     }
 }
 

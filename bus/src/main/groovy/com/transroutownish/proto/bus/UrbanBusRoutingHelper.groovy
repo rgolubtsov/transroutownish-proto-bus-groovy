@@ -2,7 +2,7 @@
  * bus/src/main/groovy/com/transroutownish/proto/bus/
  * UrbanBusRoutingHelper.groovy
  * ============================================================================
- * Urban bus routing microservice prototype (Groovy port). Version 0.1.2
+ * Urban bus routing microservice prototype (Groovy port). Version 0.1.5
  * ============================================================================
  * A daemon written in Groovy, designed and intended to be run
  * as a microservice, implementing a simple urban bus routing prototype.
@@ -22,7 +22,7 @@ import java.lang.invoke.MethodHandles
 /**
  * The helper class for the daemon.
  *
- * @version 0.1.2
+ * @version 0.1.5
  * @since   0.0.1
  */
 class UrbanBusRoutingHelper {
@@ -45,6 +45,15 @@ class UrbanBusRoutingHelper {
         = "Unable to get application properties."
     static final String ERR_DATASTORE_NOT_FOUND
         = "FATAL: Data store file not found. Quitting..."
+    static final String ERR_CANNOT_START_SERVER
+        = "FATAL: Cannot start server "
+    static final String ERR_ADDR_ALREADY_IN_USE
+        = "due to address requested already in use. Quitting..."
+    static final String ERR_SERV_UNKNOWN_REASON
+        = "for an unknown reason. Quitting..."
+    static final String ERR_NOT_YET_IMPLEMENTED
+        = '{"error":"Not yet implemented."}'
+    static final int    ERR_EADDRINUSE_NEGATIVE = -98
 
     // Common notification messages.
     static final String MSG_SERVER_STARTED = "Server started on port "
@@ -73,6 +82,13 @@ class UrbanBusRoutingHelper {
     static final String PATH_DIR    = "routes.datastore.path.dir"
     static final String FILENAME    = "routes.datastore.filename"
 
+    // REST URI path-related constants.
+    static final String REST_PREFIX = "route"
+    static final String REST_DIRECT = "direct"
+
+    // HTTP response-related constants.
+    static final String MIME_TYPE = "application/json"
+
     /** The SLF4J logger. */
     static final Logger l = LoggerFactory.getLogger(
         MethodHandles.lookup().lookupClass())
@@ -94,10 +110,10 @@ class UrbanBusRoutingHelper {
             if ((server_port >= MIN_PORT) && (server_port <= MAX_PORT)) {
                 return server_port
             } else {
-                l.error ERR_PORT_VALID_MUST_BE_POSITIVE_INT; return DEF_PORT
+                l.error(ERR_PORT_VALID_MUST_BE_POSITIVE_INT); return DEF_PORT
             }
         } else {
-            l.error ERR_PORT_VALID_MUST_BE_POSITIVE_INT; return DEF_PORT
+            l.error(ERR_PORT_VALID_MUST_BE_POSITIVE_INT); return DEF_PORT
         }
     }
 
@@ -151,7 +167,7 @@ class UrbanBusRoutingHelper {
             props.load(data)
             data.close()
         } catch (IOException e) {
-            l.error ERR_APP_PROPS_UNABLE_TO_GET
+            l.error(ERR_APP_PROPS_UNABLE_TO_GET)
         }
 
         return props
