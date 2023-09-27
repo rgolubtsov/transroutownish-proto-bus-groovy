@@ -25,9 +25,13 @@ import ratpack.service.Service
 import ratpack.service.StartEvent
 import ratpack.service.StopEvent
 
-import ratpack.server.RatpackServer
+import ratpack.error.ClientErrorHandler
+
+import ratpack.handling.Context
 
 import ratpack.http.Status
+
+import ratpack.server.RatpackServer
 
 import static com.transroutownish.proto.bus.UrbanBusRoutingHelper.*
 
@@ -83,6 +87,22 @@ class UrbanBusRoutingController {
         }
     }
 
+    class UrbanBusRoutingClientError implements ClientErrorHandler {
+        void error(final Context ctx, final int status) {
+            def req = ctx.getRequest()
+            def uri = req.getUri()
+
+            switch (status) {
+                case Status.BAD_REQUEST:
+                    l.debug("=== HTTP 400 Bad Request: $uri")
+
+                    break
+                default:
+                    l.debug("=== HTTP 404 Not Found: $uri")
+            }
+        }
+    }
+
     /**
      * Starts up the bundled web server.
      *
@@ -105,6 +125,7 @@ class UrbanBusRoutingController {
             ).registryOf(
                 regSpec ->
                 regSpec.add(new UrbanBusRoutingService())
+                       .add(new UrbanBusRoutingClientError())
                        .add(server_port)
                        .add(syslog)
             ).handlers(
