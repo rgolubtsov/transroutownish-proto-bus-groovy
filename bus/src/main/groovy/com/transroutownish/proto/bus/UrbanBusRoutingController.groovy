@@ -88,18 +88,36 @@ class UrbanBusRoutingController {
     }
 
     class UrbanBusRoutingClientError implements ClientErrorHandler {
-        void error(final Context ctx, final int status) {
-            def req = ctx.getRequest()
-            def uri = req.getUri()
+        void error(final Context ctx, final int status_code) {
+            def uri = ctx.getRequest().getUri()
 
-            switch (status) {
-                case Status.BAD_REQUEST:
+            def status = Status.NOT_FOUND
+            def body   =    ERR_NOT_FOUND
+
+            switch (status_code) {
+                case HTTP_400:
                     l.debug("=== HTTP 400 Bad Request: $uri")
+
+                    status = Status.BAD_REQUEST
+                    body   = ERR_REQ_PARAMS_MUST_BE_POSITIVE_INTS
+
+                    break
+                case HTTP_404:
+                    l.debug("=== HTTP 404 Not Found: $uri")
+
+                    break
+                case HTTP_405:
+                    l.debug("=== HTTP 405 Method Not Allowed: $uri")
+
+                    status = Status.METHOD_NOT_ALLOWED
+                    body   = EMPTY_STRING
 
                     break
                 default:
                     l.debug("=== HTTP 404 Not Found: $uri")
             }
+
+            ctx.getResponse().status(status).send(MIME_TYPE, body)
         }
     }
 
