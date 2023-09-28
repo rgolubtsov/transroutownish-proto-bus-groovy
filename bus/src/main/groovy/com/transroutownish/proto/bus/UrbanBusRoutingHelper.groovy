@@ -53,6 +53,11 @@ class UrbanBusRoutingHelper {
         = "for an unknown reason. Quitting..."
     static final String ERR_NOT_YET_IMPLEMENTED
         = '{"error":"Not yet implemented."}'
+    static final String ERR_REQ_PARAMS_MUST_BE_POSITIVE_INTS
+        = '''{"error":"Request parameters must take positive integer values,\
+ in the range 1 .. 2,147,483,647. Please check your inputs."}'''
+    static final String ERR_NOT_FOUND
+        = '{"error":"404 Not Found."}'
     static final int    ERR_EADDRINUSE_NEGATIVE = -98
 
     // Common notification messages.
@@ -85,6 +90,11 @@ class UrbanBusRoutingHelper {
     // REST URI path-related constants.
     static final String REST_PREFIX = "route"
     static final String REST_DIRECT = "direct"
+
+    // HTTP response status codes.
+    static final int HTTP_400 = 400
+    static final int HTTP_404 = 404
+    static final int HTTP_405 = 405
 
     // HTTP response-related constants.
     static final String MIME_TYPE = "application/json"
