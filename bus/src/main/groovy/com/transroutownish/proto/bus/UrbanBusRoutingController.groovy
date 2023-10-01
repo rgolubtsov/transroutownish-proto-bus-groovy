@@ -91,8 +91,8 @@ class UrbanBusRoutingController {
         void error(final Context ctx, final int status_code) {
             def uri = ctx.getRequest().getUri()
 
-            def status = Status.NOT_FOUND
-            def body   =    ERR_NOT_FOUND
+            def status = Status.IM_A_TEAPOT // <== HTTP 418 I'm a teapot
+            def body   = EMPTY_STRING       // <== No body in the response.
 
             switch (status_code) {
                 case HTTP_400:
@@ -105,16 +105,18 @@ class UrbanBusRoutingController {
                 case HTTP_404:
                     l.debug("=== HTTP 404 Not Found: $uri")
 
+                    status = Status.NOT_FOUND
+                    body   = ERR_NOT_FOUND
+
                     break
                 case HTTP_405:
                     l.debug("=== HTTP 405 Method Not Allowed: $uri")
 
                     status = Status.METHOD_NOT_ALLOWED
-                    body   = EMPTY_STRING
 
                     break
                 default:
-                    l.debug("=== HTTP 404 Not Found: $uri")
+                    l.debug("=== HTTP 418 I'm a teapot: $uri")
             }
 
             ctx.getResponse().status(status).send(MIME_TYPE, body)
