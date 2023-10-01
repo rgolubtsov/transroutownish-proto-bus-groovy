@@ -96,28 +96,25 @@ class UrbanBusRoutingController {
 
             switch (status_code) {
                 case HTTP_400:
-                    l.debug("=== HTTP 400 Bad Request: $uri")
-
                     status = Status.BAD_REQUEST
                     body   = ERR_REQ_PARAMS_MUST_BE_POSITIVE_INTS
 
                     break
                 case HTTP_404:
-                    l.debug("=== HTTP 404 Not Found: $uri")
-
                     status = Status.NOT_FOUND
                     body   = ERR_NOT_FOUND
 
                     break
                 case HTTP_405:
-                    l.debug("=== HTTP 405 Method Not Allowed: $uri")
-
                     status = Status.METHOD_NOT_ALLOWED
 
                     break
                 default:
-                    l.debug("=== HTTP 418 I'm a teapot: $uri")
+                    l.debug('''HTTP 418 I'm a teapot:\
+ it's issued for the following URI:''')
             }
+
+            l.debug(uri)
 
             ctx.getResponse().status(status).send(MIME_TYPE, body)
         }
