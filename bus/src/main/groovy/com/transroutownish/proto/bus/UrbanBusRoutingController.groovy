@@ -95,10 +95,13 @@ class UrbanBusRoutingController {
      */
     class UrbanBusRoutingClientError implements ClientErrorHandler {
         /**
-         * TODO: Provide a description for the callback method.
+         * Gets called when one of the <strong>4xx Client Error</strong>
+         * section's errors occurred.
          *
-         * @param ctx         TODO: Provide a description for the param.
-         * @param status_code TODO: Provide a description for the param.
+         * @param ctx         The context of the HTTP handler to deal
+         *                    with a request/response pair.
+         * @param status_code The 4xx status code that explains
+         *                    the client error.
          */
         void error(final Context ctx, final int status_code) {
             def uri = ctx.getRequest().getUri()
