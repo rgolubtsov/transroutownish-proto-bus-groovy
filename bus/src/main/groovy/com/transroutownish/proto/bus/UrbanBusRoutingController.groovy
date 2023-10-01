@@ -87,7 +87,19 @@ class UrbanBusRoutingController {
         }
     }
 
+    /**
+     * The client error handler class for the daemon's controller.
+     * <br />
+     * <br />It handles HTTP errors from the 4xx Client Error section
+     * of status codes.
+     */
     class UrbanBusRoutingClientError implements ClientErrorHandler {
+        /**
+         * TODO: Provide a description for the callback method.
+         *
+         * @param ctx         TODO: Provide a description for the param.
+         * @param status_code TODO: Provide a description for the param.
+         */
         void error(final Context ctx, final int status_code) {
             def uri = ctx.getRequest().getUri()
 
