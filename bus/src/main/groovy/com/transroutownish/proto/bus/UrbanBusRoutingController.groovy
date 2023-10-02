@@ -31,6 +31,8 @@ import ratpack.handling.Context
 
 import ratpack.http.Status
 
+import ratpack.jackson.Jackson
+
 import ratpack.server.RatpackServer
 
 import static com.transroutownish.proto.bus.UrbanBusRoutingHelper.*
@@ -131,7 +133,15 @@ class UrbanBusRoutingController {
 
             l.debug(uri)
 
-            ctx.getResponse().status(status).send(MIME_TYPE, body)
+            def resp = ctx.getResponse().status(status)
+
+            if (body.isEmpty()) {
+                resp.send(MIME_TYPE, body)
+            } else {
+                ctx.render(Jackson.json(
+                    new UrbanBusRoutingResponseError(body)
+                ))
+            }
         }
     }
 
