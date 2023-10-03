@@ -174,12 +174,15 @@ class UrbanBusRoutingController {
                 chain   -> // GET /route/direct
                 chain.get("$REST_PREFIX$SLASH$REST_DIRECT",
                     ctx ->
-                    ctx.getResponse()
-                       .status(Status.OK)
-                       .send(MIME_TYPE, ERR_NOT_YET_IMPLEMENTED)
-                )
-            )
-        )
+//                  ctx.getResponse()
+//                     .status(Status.OK)
+//                     .send(MIME_TYPE, ERR_NOT_YET_IMPLEMENTED)
+                    ctx.render(Jackson.json(
+                        new UrbanBusRoutingResponseOk(0, 0, false)
+                    ))  //                            ^  ^  ^
+                )       // from ----------------------+  |  |
+            )           // to ---------------------------+  |
+        )               // direct --------------------------+
 
         // Trying to start up the Ratpack web server.
         try {

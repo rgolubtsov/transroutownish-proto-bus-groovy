@@ -51,8 +51,6 @@ class UrbanBusRoutingHelper {
         = "due to address requested already in use. Quitting..."
     static final String ERR_SERV_UNKNOWN_REASON
         = "for an unknown reason. Quitting..."
-    static final String ERR_NOT_YET_IMPLEMENTED
-        = '{"error":"Not yet implemented."}'
     static final String ERR_REQ_PARAMS_MUST_BE_POSITIVE_INTS
         = '''Request parameters must take positive integer values,\
  in the range 1 .. 2,147,483,647. Please check your inputs.'''
