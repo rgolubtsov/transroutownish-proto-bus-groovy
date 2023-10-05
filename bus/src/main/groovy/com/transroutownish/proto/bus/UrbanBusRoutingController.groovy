@@ -172,17 +172,39 @@ class UrbanBusRoutingController {
                        .add(syslog)
             ).handlers(
                 chain   -> // GET /route/direct
-                chain.get("$REST_PREFIX$SLASH$REST_DIRECT",
-                    ctx ->
-//                  ctx.getResponse()
-//                     .status(Status.OK)
-//                     .send(MIME_TYPE, ERR_NOT_YET_IMPLEMENTED)
+                chain.get("$REST_PREFIX$SLASH$REST_DIRECT", ctx -> {
+                    // --------------------------------------------------------
+                    // --- Parsing and validating request params - Begin ------
+                    // --------------------------------------------------------
+                    def from = 0
+                    def to   = 0
+
+                    def params = ctx.getRequest().getQueryParams()
+
+                    try {
+                        from = Integer.parseInt(params.from)
+                        to   = Integer.parseInt(params.to  )
+
+                        if ((from < 1) || (to < 1)) {
+                            l.error(ERR_REQ_PARAMS_MUST_BE_POSITIVE_INTS)
+                        }
+                    } catch (NumberFormatException e) {
+                        l.error(ERR_REQ_PARAMS_MUST_BE_POSITIVE_INTS)
+                    }
+                    // --------------------------------------------------------
+                    // --- Parsing and validating request params - End --------
+                    // --------------------------------------------------------
+
+                    // Performing the routes processing to find out
+                    // the direct route.
+                    def direct = false // find_direct_route(from, to)
+
                     ctx.render(Jackson.json(
-                        new UrbanBusRoutingResponseOk(0, 0, false)
-                    ))  //                            ^  ^  ^
-                )       // from ----------------------+  |  |
-            )           // to ---------------------------+  |
-        )               // direct --------------------------+
+                        new UrbanBusRoutingResponseOk(from, to, direct)
+                    ))
+                })
+            )
+        )
 
         // Trying to start up the Ratpack web server.
         try {
