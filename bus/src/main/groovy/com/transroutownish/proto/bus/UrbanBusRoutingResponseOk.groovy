@@ -2,7 +2,7 @@
  * bus/src/main/groovy/com/transroutownish/proto/bus/
  * UrbanBusRoutingResponseOk.groovy
  * ============================================================================
- * Urban bus routing microservice prototype (Groovy port). Version 0.1.5
+ * Urban bus routing microservice prototype (Groovy port). Version 0.1.9
  * ============================================================================
  * A daemon written in Groovy, designed and intended to be run
  * as a microservice, implementing a simple urban bus routing prototype.
@@ -17,7 +17,7 @@ package com.transroutownish.proto.bus
 /**
  * The POJO representation of successful message, returning in the response.
  *
- * @version 0.1.5
+ * @version 0.1.9
  * @since   0.1.5
  */
 class UrbanBusRoutingResponseOk {

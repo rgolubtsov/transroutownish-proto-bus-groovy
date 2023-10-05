@@ -2,7 +2,7 @@
  * bus/src/main/groovy/com/transroutownish/proto/bus/
  * UrbanBusRoutingController.groovy
  * ============================================================================
- * Urban bus routing microservice prototype (Groovy port). Version 0.1.5
+ * Urban bus routing microservice prototype (Groovy port). Version 0.1.9
  * ============================================================================
  * A daemon written in Groovy, designed and intended to be run
  * as a microservice, implementing a simple urban bus routing prototype.
@@ -40,7 +40,7 @@ import static com.transroutownish.proto.bus.UrbanBusRoutingHelper.*
 /**
  * The controller class of the daemon.
  *
- * @version 0.1.5
+ * @version 0.1.9
  * @since   0.0.9
  */
 class UrbanBusRoutingController {
@@ -172,17 +172,39 @@ class UrbanBusRoutingController {
                        .add(syslog)
             ).handlers(
                 chain   -> // GET /route/direct
-                chain.get("$REST_PREFIX$SLASH$REST_DIRECT",
-                    ctx ->
-//                  ctx.getResponse()
-//                     .status(Status.OK)
-//                     .send(MIME_TYPE, ERR_NOT_YET_IMPLEMENTED)
+                chain.get("$REST_PREFIX$SLASH$REST_DIRECT", ctx -> {
+                    // --------------------------------------------------------
+                    // --- Parsing and validating request params - Begin ------
+                    // --------------------------------------------------------
+                    def from = 0
+                    def to   = 0
+
+                    def params = ctx.getRequest().getQueryParams()
+
+                    try {
+                        from = Integer.parseInt(params.from)
+                        to   = Integer.parseInt(params.to  )
+
+                        if ((from < 1) || (to < 1)) {
+                            l.error(ERR_REQ_PARAMS_MUST_BE_POSITIVE_INTS)
+                        }
+                    } catch (NumberFormatException e) {
+                        l.error(ERR_REQ_PARAMS_MUST_BE_POSITIVE_INTS)
+                    }
+                    // --------------------------------------------------------
+                    // --- Parsing and validating request params - End --------
+                    // --------------------------------------------------------
+
+                    // Performing the routes processing to find out
+                    // the direct route.
+                    def direct = false // find_direct_route(from, to)
+
                     ctx.render(Jackson.json(
-                        new UrbanBusRoutingResponseOk(0, 0, false)
-                    ))  //                            ^  ^  ^
-                )       // from ----------------------+  |  |
-            )           // to ---------------------------+  |
-        )               // direct --------------------------+
+                        new UrbanBusRoutingResponseOk(from, to, direct)
+                    ))
+                })
+            )
+        )
 
         // Trying to start up the Ratpack web server.
         try {
