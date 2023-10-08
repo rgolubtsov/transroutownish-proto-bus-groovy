@@ -133,7 +133,8 @@ class UrbanBusRoutingController {
 
             l.debug(uri)
 
-            def resp = ctx.getResponse().status(status)
+            def resp = ctx.header(HDR_SERVER_N, HDR_SERVER_V)
+                          .getResponse().status(status)
 
             if (body.isEmpty()) {
                 resp.send(MIME_TYPE, body)
@@ -207,6 +208,8 @@ class UrbanBusRoutingController {
                     // --------------------------------------------------------
                     // --- Parsing and validating request params - End --------
                     // --------------------------------------------------------
+
+                    ctx.header(HDR_SERVER_N, HDR_SERVER_V)
 
                     if (is_request_malformed) {
                         ctx.getResponse().status(Status.BAD_REQUEST)
