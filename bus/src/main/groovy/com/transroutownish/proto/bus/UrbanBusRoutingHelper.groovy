@@ -32,9 +32,13 @@ class UrbanBusRoutingHelper {
     static final String EMPTY_STRING =  ""
     static final String SPACE        = " "
     static final String SLASH        = "/"
+    static final String EQUALS       = "="
+    static final String V_BAR        = "|"
 
     // Extra helper constants.
-    static final String YES = "yes"
+    static final String YES  = "yes"
+    static final String FROM = "from"
+    static final String TO   = "to"
 
     // Common error messages.
     static final String ERR_PORT_VALID_MUST_BE_POSITIVE_INT
