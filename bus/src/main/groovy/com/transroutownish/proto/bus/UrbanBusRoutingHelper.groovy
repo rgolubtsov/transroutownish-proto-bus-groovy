@@ -19,6 +19,8 @@ import org.slf4j.LoggerFactory
 
 import java.lang.invoke.MethodHandles
 
+import ratpack.util.RatpackVersion
+
 /**
  * The helper class for the daemon.
  *
@@ -32,9 +34,13 @@ class UrbanBusRoutingHelper {
     static final String EMPTY_STRING =  ""
     static final String SPACE        = " "
     static final String SLASH        = "/"
+    static final String EQUALS       = "="
+    static final String V_BAR        = "|"
 
     // Extra helper constants.
-    static final String YES = "yes"
+    static final String YES  = "yes"
+    static final String FROM = "from"
+    static final String TO   = "to"
 
     // Common error messages.
     static final String ERR_PORT_VALID_MUST_BE_POSITIVE_INT
@@ -95,7 +101,9 @@ class UrbanBusRoutingHelper {
     static final int HTTP_405 = 405
 
     // HTTP response-related constants.
-    static final String MIME_TYPE = "application/json"
+    static final String MIME_TYPE    = "application/json"
+    static final String HDR_SERVER_N = "server"
+    static final String HDR_SERVER_V = "Ratpack " + RatpackVersion.getVersion()
 
     /** The SLF4J logger. */
     static final Logger l = LoggerFactory.getLogger(

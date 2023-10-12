@@ -133,7 +133,8 @@ class UrbanBusRoutingController {
 
             l.debug(uri)
 
-            def resp = ctx.getResponse().status(status)
+            def resp = ctx.header(HDR_SERVER_N, HDR_SERVER_V)
+                          .getResponse().status(status)
 
             if (body.isEmpty()) {
                 resp.send(MIME_TYPE, body)
@@ -155,7 +156,7 @@ class UrbanBusRoutingController {
         def(server_port,
             debug_log_enabled,
             routes_list,
-            syslog
+            s // <== The Unix system logger.
         ) = args
 
         // Creating the Ratpack web server based on the configuration provided.
@@ -169,39 +170,63 @@ class UrbanBusRoutingController {
                 regSpec.add(new UrbanBusRoutingService())
                        .add(new UrbanBusRoutingClientError())
                        .add(server_port)
-                       .add(syslog)
+                       .add(s)
             ).handlers(
                 chain   -> // GET /route/direct
                 chain.get("$REST_PREFIX$SLASH$REST_DIRECT", ctx -> {
+                    def params = ctx.getRequest().getQueryParams()
+
+                    def from_ = params.from
+                    def to_   = params.to
+
+                    if (debug_log_enabled) {
+                        l.debug(FROM + EQUALS + from_ + SPACE + V_BAR + SPACE
+                              + TO   + EQUALS + to_)
+
+                        s.debug(FROM + EQUALS + from_ + SPACE + V_BAR + SPACE
+                              + TO   + EQUALS + to_)
+                    }
+
                     // --------------------------------------------------------
                     // --- Parsing and validating request params - Begin ------
                     // --------------------------------------------------------
+                    def is_request_malformed = false
+
                     def from = 0
                     def to   = 0
 
-                    def params = ctx.getRequest().getQueryParams()
-
                     try {
-                        from = Integer.parseInt(params.from)
-                        to   = Integer.parseInt(params.to  )
+                        from = Integer.parseInt(from_)
+                        to   = Integer.parseInt(to_  )
 
                         if ((from < 1) || (to < 1)) {
-                            l.error(ERR_REQ_PARAMS_MUST_BE_POSITIVE_INTS)
+                            is_request_malformed = true
                         }
                     } catch (NumberFormatException e) {
-                        l.error(ERR_REQ_PARAMS_MUST_BE_POSITIVE_INTS)
+                        is_request_malformed = true
                     }
                     // --------------------------------------------------------
                     // --- Parsing and validating request params - End --------
                     // --------------------------------------------------------
 
-                    // Performing the routes processing to find out
-                    // the direct route.
-                    def direct = false // find_direct_route(from, to)
+                    ctx.header(HDR_SERVER_N, HDR_SERVER_V)
 
-                    ctx.render(Jackson.json(
-                        new UrbanBusRoutingResponseOk(from, to, direct)
-                    ))
+                    if (is_request_malformed) {
+                        ctx.getResponse().status(Status.BAD_REQUEST)
+
+                        ctx.render(Jackson.json(
+                            new UrbanBusRoutingResponseError(
+                                ERR_REQ_PARAMS_MUST_BE_POSITIVE_INTS)
+                        ))
+                    } else {
+                        // Performing the routes processing to find out
+                        // the direct route.
+                        def direct = false // find_direct_route(from, to)
+
+                        ctx.render(Jackson.json(
+                            new UrbanBusRoutingResponseOk(from, to, direct)
+                        ))
+                    }
                 })
             )
         )
