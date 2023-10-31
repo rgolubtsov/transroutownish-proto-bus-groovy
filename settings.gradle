@@ -1,7 +1,7 @@
 /*
  * settings.gradle
  * ============================================================================
- * Urban bus routing microservice prototype (Groovy port). Version 0.1.9
+ * Urban bus routing microservice prototype (Groovy port). Version 0.1.10
  * ============================================================================
  * A daemon written in Groovy, designed and intended to be run
  * as a microservice, implementing a simple urban bus routing prototype.
