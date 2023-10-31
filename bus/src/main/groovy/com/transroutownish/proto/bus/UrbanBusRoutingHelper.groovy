@@ -103,7 +103,7 @@ class UrbanBusRoutingHelper {
     // HTTP response-related constants.
     static final String MIME_TYPE    = "application/json"
     static final String HDR_SERVER_N = "server"
-    static final String HDR_SERVER_V = "Ratpack " + RatpackVersion.getVersion()
+    static final String HDR_SERVER_V = "Ratpack/" + RatpackVersion.getVersion()
 
     /** The SLF4J logger. */
     static final Logger l = LoggerFactory.getLogger(
