@@ -2,7 +2,7 @@
  * bus/src/main/groovy/com/transroutownish/proto/bus/
  * UrbanBusRoutingController.groovy
  * ============================================================================
- * Urban bus routing microservice prototype (Groovy port). Version 0.1.10
+ * Urban bus routing microservice prototype (Groovy port). Version 0.1.11
  * ============================================================================
  * A daemon written in Groovy, designed and intended to be run
  * as a microservice, implementing a simple urban bus routing prototype.
@@ -26,6 +26,7 @@ import ratpack.service.StartEvent
 import ratpack.service.StopEvent
 
 import ratpack.error.ClientErrorHandler
+import ratpack.error.ServerErrorHandler
 
 import ratpack.handling.Context
 
@@ -40,7 +41,7 @@ import static com.transroutownish.proto.bus.UrbanBusRoutingHelper.*
 /**
  * The controller class of the daemon.
  *
- * @version 0.1.10
+ * @version 0.1.11
  * @since   0.0.9
  */
 class UrbanBusRoutingController {
@@ -147,6 +148,31 @@ class UrbanBusRoutingController {
     }
 
     /**
+     * The server error handler class for the daemon's controller.
+     * <br />
+     * <br />It handles HTTP errors from the 5xx Server Error section
+     * of status codes.
+     */
+    class UrbanBusRoutingServerError implements ServerErrorHandler {
+        /**
+         * Gets called when one of the <strong>5xx Server Error</strong>
+         * section's errors occurred.
+         *
+         * @param ctx       The context of the HTTP handler to deal
+         *                  with a request/response pair.
+         * @param throwable The exception that is about to be thrown.
+         *                  It is usually caused by internal error
+         *                  that was raised during processing the request.
+         */
+        void error(final Context ctx, final Throwable throwable) {
+            l.warn("$V_BAR$SPACE$throwable")
+
+            ctx.header(HDR_SERVER_N, HDR_SERVER_V)
+               .getResponse().status(Status.INTERNAL_SERVER_ERROR).send()
+        }
+    }
+
+    /**
      * Starts up the bundled web server.
      *
      * @param args The list containing the server port number to listen on,
@@ -169,6 +195,7 @@ class UrbanBusRoutingController {
                 regSpec ->
                 regSpec.add(new UrbanBusRoutingService())
                        .add(new UrbanBusRoutingClientError())
+                       .add(new UrbanBusRoutingServerError())
                        .add(server_port)
                        .add(s)
             ).handlers(
