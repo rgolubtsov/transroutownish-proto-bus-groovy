@@ -160,7 +160,9 @@ class UrbanBusRoutingController {
          *
          * @param ctx       The context of the HTTP handler to deal
          *                  with a request/response pair.
-         * @param throwable TODO: Provide a description for this param.
+         * @param throwable The exception that is about to be thrown.
+         *                  It is usually caused by internal error
+         *                  that was raised during processing the request.
          */
         void error(final Context ctx, final Throwable throwable) {
             l.warn("$V_BAR$SPACE$throwable")
