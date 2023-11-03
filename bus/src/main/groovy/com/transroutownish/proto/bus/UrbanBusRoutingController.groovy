@@ -126,6 +126,8 @@ class UrbanBusRoutingController {
                 case HTTP_405:
                     status = Status.METHOD_NOT_ALLOWED
 
+                    ctx.header(HDR_ALLOW_N, HDR_ALLOW_V)
+
                     break
                 default:
                     l.debug('''HTTP 418 I'm a teapot:\
@@ -138,7 +140,7 @@ class UrbanBusRoutingController {
                           .getResponse().status(status)
 
             if (body.isEmpty()) {
-                resp.send(MIME_TYPE, body)
+                resp.send()
             } else {
                 ctx.render(Jackson.json(
                     new UrbanBusRoutingResponseError(body)
