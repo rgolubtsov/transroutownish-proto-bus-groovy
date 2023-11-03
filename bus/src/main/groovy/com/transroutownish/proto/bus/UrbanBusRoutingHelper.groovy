@@ -102,6 +102,8 @@ class UrbanBusRoutingHelper {
 
     // HTTP response-related constants.
     static final String MIME_TYPE    = "application/json"
+    static final String HDR_ALLOW_N  = "allow"
+    static final String HDR_ALLOW_V  = "GET, HEAD"
     static final String HDR_SERVER_N = "server"
     static final String HDR_SERVER_V = "Ratpack/" + RatpackVersion.getVersion()
 
