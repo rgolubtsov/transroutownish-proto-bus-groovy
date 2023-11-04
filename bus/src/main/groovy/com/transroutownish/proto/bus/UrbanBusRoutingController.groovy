@@ -273,6 +273,38 @@ class UrbanBusRoutingController {
             }
         }
     }
+
+    /**
+     * Performs the routes processing (onto bus stops sequences) to identify
+     * and return whether a particular interval between two bus stop points
+     * given is direct (i.e. contains in any of the routes), or not.
+     *
+     * @param debug_log_enabled The debug logging enabler.
+     * @param routes_list       The list containing all available routes.
+     * @param from              The starting bus stop point.
+     * @param to                The ending   bus stop point.
+     *
+     * @return <code>true</code> if the direct route is found,
+     *         <code>false</code> otherwise.
+     */
+    boolean find_direct_route(final boolean debug_log_enabled,
+                              final List    routes_list,
+                              final String  from,
+                              final String  to) {
+
+        def direct = false
+
+        // Two bus stop points in a route cannot point up to the same value.
+        if (from === to) { return direct }
+
+        def route = EMPTY_STRING, route_from = EMPTY_STRING
+
+        def routes_count = routes_list.size()
+
+        for (def i = 0; i < routes_count; i++) {
+            route = routes_list[i]
+        }
+    }
 }
 
 // vim:set nu et ts=4 sw=4:
