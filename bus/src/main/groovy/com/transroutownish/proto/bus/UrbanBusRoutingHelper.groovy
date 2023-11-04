@@ -107,6 +107,18 @@ class UrbanBusRoutingHelper {
     static final String HDR_SERVER_N = "server"
     static final String HDR_SERVER_V = "Ratpack/" + RatpackVersion.getVersion()
 
+    /**
+     * The regex pattern for the leading part of a bus stops sequence,
+     * before the matching element.
+     */
+    static final String SEQ1_REGEX = ".*\\s"
+
+    /**
+     * The regex pattern for the trailing part of a bus stops sequence,
+     * after the matching element.
+     */
+    static final String SEQ2_REGEX = "\\s.*"
+
     /** The SLF4J logger. */
     static final Logger l = LoggerFactory.getLogger(
         MethodHandles.lookup().lookupClass())
