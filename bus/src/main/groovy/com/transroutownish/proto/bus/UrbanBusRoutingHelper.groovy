@@ -2,7 +2,7 @@
  * bus/src/main/groovy/com/transroutownish/proto/bus/
  * UrbanBusRoutingHelper.groovy
  * ============================================================================
- * Urban bus routing microservice prototype (Groovy port). Version 0.1.11
+ * Urban bus routing microservice prototype (Groovy port). Version 0.2.0
  * ============================================================================
  * A daemon written in Groovy, designed and intended to be run
  * as a microservice, implementing a simple urban bus routing prototype.
@@ -24,7 +24,7 @@ import ratpack.util.RatpackVersion
 /**
  * The helper class for the daemon.
  *
- * @version 0.1.11
+ * @version 0.2.0
  * @since   0.0.1
  */
 class UrbanBusRoutingHelper {
@@ -106,6 +106,18 @@ class UrbanBusRoutingHelper {
     static final String HDR_ALLOW_V  = "GET, HEAD"
     static final String HDR_SERVER_N = "server"
     static final String HDR_SERVER_V = "Ratpack/" + RatpackVersion.getVersion()
+
+    /**
+     * The regex pattern for the leading part of a bus stops sequence,
+     * before the matching element.
+     */
+    static final String SEQ1_REGEX = ".*\\s"
+
+    /**
+     * The regex pattern for the trailing part of a bus stops sequence,
+     * after the matching element.
+     */
+    static final String SEQ2_REGEX = "\\s.*"
 
     /** The SLF4J logger. */
     static final Logger l = LoggerFactory.getLogger(

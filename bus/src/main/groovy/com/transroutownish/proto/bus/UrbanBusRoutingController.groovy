@@ -2,7 +2,7 @@
  * bus/src/main/groovy/com/transroutownish/proto/bus/
  * UrbanBusRoutingController.groovy
  * ============================================================================
- * Urban bus routing microservice prototype (Groovy port). Version 0.1.11
+ * Urban bus routing microservice prototype (Groovy port). Version 0.2.0
  * ============================================================================
  * A daemon written in Groovy, designed and intended to be run
  * as a microservice, implementing a simple urban bus routing prototype.
@@ -41,7 +41,7 @@ import static com.transroutownish.proto.bus.UrbanBusRoutingHelper.*
 /**
  * The controller class of the daemon.
  *
- * @version 0.1.11
+ * @version 0.2.0
  * @since   0.0.9
  */
 class UrbanBusRoutingController {
@@ -167,7 +167,7 @@ class UrbanBusRoutingController {
          *                  that was raised during processing the request.
          */
         void error(final Context ctx, final Throwable throwable) {
-            l.warn("$V_BAR$SPACE$throwable")
+            l.warn("$V_BAR $throwable")
 
             ctx.header(HDR_SERVER_N, HDR_SERVER_V)
                .getResponse().status(Status.INTERNAL_SERVER_ERROR).send()
@@ -209,11 +209,8 @@ class UrbanBusRoutingController {
                     def to_   = params.to
 
                     if (debug_log_enabled) {
-                        l.debug(FROM + EQUALS + from_ + SPACE + V_BAR + SPACE
-                              + TO   + EQUALS + to_)
-
-                        s.debug(FROM + EQUALS + from_ + SPACE + V_BAR + SPACE
-                              + TO   + EQUALS + to_)
+                        l.debug("$FROM$EQUALS$from_ $V_BAR $TO$EQUALS$to_")
+                        s.debug("$FROM$EQUALS$from_ $V_BAR $TO$EQUALS$to_")
                     }
 
                     // --------------------------------------------------------
@@ -250,7 +247,11 @@ class UrbanBusRoutingController {
                     } else {
                         // Performing the routes processing to find out
                         // the direct route.
-                        def direct = false // find_direct_route(from, to)
+                        def direct = find_direct_route(
+                            debug_log_enabled,
+                            routes_list,
+                            String.valueOf(from),
+                            String.valueOf(to))
 
                         ctx.render(Jackson.json(
                             new UrbanBusRoutingResponseOk(from, to, direct)
@@ -272,6 +273,59 @@ class UrbanBusRoutingController {
                 l.error(ERR_CANNOT_START_SERVER + ERR_SERV_UNKNOWN_REASON)
             }
         }
+    }
+
+    /**
+     * Performs the routes processing (onto bus stops sequences) to identify
+     * and return whether a particular interval between two bus stop points
+     * given is direct (i.e. contains in any of the routes), or not.
+     *
+     * @param debug_log_enabled The debug logging enabler.
+     * @param routes_list       The list containing all available routes.
+     * @param from              The starting bus stop point.
+     * @param to                The ending   bus stop point.
+     *
+     * @return <code>true</code> if the direct route is found,
+     *         <code>false</code> otherwise.
+     */
+    boolean find_direct_route(final boolean debug_log_enabled,
+                              final List    routes_list,
+                              final String  from,
+                              final String  to) {
+
+        def direct = false
+
+        // Two bus stop points in a route cannot point up to the same value.
+        if (from === to) { return direct }
+
+        def route = EMPTY_STRING, route_from = EMPTY_STRING
+
+        def routes_count = routes_list.size()
+
+        for (def i = 0; i < routes_count; i++) {
+            route = routes_list[i]
+
+            if (debug_log_enabled) {
+                l.debug("${i + 1} $EQUALS $route")
+            }
+
+            if (route.matches("$SEQ1_REGEX$from$SEQ2_REGEX")) {
+                // Pinning in the starting bus stop point, if it's found.
+                // Next, searching for the ending bus stop point
+                // on the current route, beginning at the pinned point.
+                route_from = route.substring(route.indexOf(from))
+
+                if (debug_log_enabled) {
+                    l.debug("$from $V_BAR $route_from")
+                }
+
+                if (route_from.matches("$SEQ1_REGEX$to$SEQ2_REGEX")) {
+                    direct = true; break
+                }
+            }
+        }
+
+        return direct
     }
 }
 
