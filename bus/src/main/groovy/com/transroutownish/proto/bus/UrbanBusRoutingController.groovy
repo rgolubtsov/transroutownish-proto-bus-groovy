@@ -308,13 +308,13 @@ class UrbanBusRoutingController {
         for (def i = 0; i < routes_count; i++) {
             route = routes_list[i]
 
-            if (route.matches(SEQ1_REGEX + from + SEQ2_REGEX)) {
+            if (route.matches("$SEQ1_REGEX$from$SEQ2_REGEX")) {
                 // Pinning in the starting bus stop point, if it's found.
                 // Next, searching for the ending bus stop point
                 // on the current route, beginning at the pinned point.
                 route_from = route.substring(route.indexOf(from))
 
-                if (route_from.matches(SEQ1_REGEX + to + SEQ2_REGEX)) {
+                if (route_from.matches("$SEQ1_REGEX$to$SEQ2_REGEX")) {
                     direct = true; break
                 }
             }
