@@ -167,7 +167,7 @@ class UrbanBusRoutingController {
          *                  that was raised during processing the request.
          */
         void error(final Context ctx, final Throwable throwable) {
-            l.warn("$V_BAR$SPACE$throwable")
+            l.warn("$V_BAR $throwable")
 
             ctx.header(HDR_SERVER_N, HDR_SERVER_V)
                .getResponse().status(Status.INTERNAL_SERVER_ERROR).send()
@@ -209,11 +209,8 @@ class UrbanBusRoutingController {
                     def to_   = params.to
 
                     if (debug_log_enabled) {
-                        l.debug(FROM + EQUALS + from_ + SPACE + V_BAR + SPACE
-                              + TO   + EQUALS + to_)
-
-                        s.debug(FROM + EQUALS + from_ + SPACE + V_BAR + SPACE
-                              + TO   + EQUALS + to_)
+                        l.debug("$FROM$EQUALS$from_ $V_BAR $TO$EQUALS$to_")
+                        s.debug("$FROM$EQUALS$from_ $V_BAR $TO$EQUALS$to_")
                     }
 
                     // --------------------------------------------------------
@@ -308,11 +305,19 @@ class UrbanBusRoutingController {
         for (def i = 0; i < routes_count; i++) {
             route = routes_list[i]
 
+            if (debug_log_enabled) {
+                l.debug("${i + 1} $EQUALS $route")
+            }
+
             if (route.matches("$SEQ1_REGEX$from$SEQ2_REGEX")) {
                 // Pinning in the starting bus stop point, if it's found.
                 // Next, searching for the ending bus stop point
                 // on the current route, beginning at the pinned point.
                 route_from = route.substring(route.indexOf(from))
+
+                if (debug_log_enabled) {
+                    l.debug("$from $V_BAR $route_from")
+                }
 
                 if (route_from.matches("$SEQ1_REGEX$to$SEQ2_REGEX")) {
                     direct = true; break
