@@ -42,6 +42,7 @@ One may consider this project has to be suitable for a wide variety of applied a
 * **[Running](#running)**
 * **[Consuming](#consuming)**
   * **[Logging](#logging)**
+  * **[Error handling](#error-handling)**
 
 ## Building
 
@@ -145,3 +146,19 @@ $ curl 'http://localhost:8765/route/direct?from=82&to=35390'
 The microservice has the ability to log messages to a logfile and to the Unix syslog facility.
 
 **TBD** :dvd:
+
+### Error handling
+
+When the query string passed in a request, contains inappropriate input, or the URI endpoint doesn't contain anything else at all after its path, the microservice will respond with the **HTTP 400 Bad Request** status code, including a specific response body in JSON representation, like the following:
+
+```
+$ curl 'http://localhost:8765/route/direct?from=qwerty4838&to=-i-.;--089asdf../nj524987'
+{"error":"Request parameters must take positive integer values, in the range 1 .. 2,147,483,647. Please check your inputs."}
+```
+
+Or even simpler:
+
+```
+$ curl http://localhost:8765/route/direct
+{"error":"Request parameters must take positive integer values, in the range 1 .. 2,147,483,647. Please check your inputs."}
+```
