@@ -39,7 +39,9 @@ One may consider this project has to be suitable for a wide variety of applied a
 ## Table of Contents
 
 * **[Building](#building)**
+  * **[Creating a Docker image](#creating-a-docker-image)**
 * **[Running](#running)**
+  * **[Running a Docker image](#running-a-docker-image)**
 * **[Consuming](#consuming)**
   * **[Logging](#logging)**
   * **[Error handling](#error-handling)**
@@ -96,6 +98,19 @@ $
 $ make all  # <== Assembling distributions of the microservice.
 ```
 
+### Creating a Docker image
+
+**Build** a Docker image for the microservice:
+
+```
+$ # Pull the JRE image first, if not already there:
+$ sudo docker pull azul/zulu-openjdk-alpine:17-jre-headless-latest
+...
+$ # Then build the microservice image:
+$ sudo docker build -ttransroutownish/busgrv .
+...
+```
+
 ## Running
 
 **Run** the microservice using **Gradle Wrapper** (generally for development and debugging purposes):
@@ -113,6 +128,16 @@ $ # Whilst this is not necessary, it's beneficial knowing the exit code.
 
 ```
 $ ./bus/build/bus/bin/bus; echo $?
+...
+```
+
+### Running a Docker image
+
+**Run** a Docker image of the microservice, deleting all stopped containers prior to that:
+
+```
+$ sudo docker rm `sudo docker ps -aq`; \
+  export PORT=8765 && sudo docker run -dp${PORT}:${PORT} --name busgrv transroutownish/busgrv; echo $?
 ...
 ```
 
