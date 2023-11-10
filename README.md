@@ -42,6 +42,7 @@ One may consider this project has to be suitable for a wide variety of applied a
   * **[Creating a Docker image](#creating-a-docker-image)**
 * **[Running](#running)**
   * **[Running a Docker image](#running-a-docker-image)**
+  * **[Exploring a Docker image payload](#exploring-a-docker-image-payload)**
 * **[Consuming](#consuming)**
   * **[Logging](#logging)**
   * **[Error handling](#error-handling)**
@@ -139,6 +140,61 @@ $ ./bus/build/bus/bin/bus; echo $?
 $ sudo docker rm `sudo docker ps -aq`; \
   export PORT=8765 && sudo docker run -dp${PORT}:${PORT} --name busgrv transroutownish/busgrv; echo $?
 ...
+```
+
+### Exploring a Docker image payload
+
+The following is not necessary but might be considered interesting &mdash; to look up into the running container, and check out that the microservice's startup script, JAR file, log, and routes data store are at their expected places and in effect:
+
+```
+$ sudo docker ps -a
+CONTAINER ID   IMAGE                    COMMAND         CREATED             STATUS             PORTS                                       NAMES
+<container_id> transroutownish/busgrv   "bus/bin/bus"   About an hour ago   Up About an hour   0.0.0.0:8765->8765/tcp, :::8765->8765/tcp   busgrv
+$
+$ sudo docker exec -it busgrv sh; echo $?
+/var/tmp $
+/var/tmp $ java --version
+openjdk 17.0.9 2023-10-17 LTS
+OpenJDK Runtime Environment Zulu17.46+19-CA (build 17.0.9+8-LTS)
+OpenJDK 64-Bit Server VM Zulu17.46+19-CA (build 17.0.9+8-LTS, mixed mode, sharing)
+/var/tmp $
+/var/tmp $ ls -al
+total 24
+drwxrwxrwt    1 root     root          4096 Nov 10 06:45 .
+drwxr-xr-x    1 root     root          4096 Sep 28 11:18 ..
+drwxr-xr-x    4 root     root          4096 Nov 10 06:30 bus
+drwxr-xr-x    2 root     root          4096 Nov 10 06:30 data
+drwxr-xr-x    2 daemon   daemon        4096 Nov 10 06:45 log
+/var/tmp $
+/var/tmp $ ls -al bus/bin/bus bus/lib/bus-0.3.0.jar data/ log/
+-rwxr-xr-x    1 root     root         10787 Nov 10 06:20 bus/bin/bus
+-rw-r--r--    1 root     root         33895 Nov 10 06:20 bus/lib/bus-0.3.0.jar
+
+data/:
+total 56
+drwxr-xr-x    2 root     root          4096 Nov 10 06:30 .
+drwxrwxrwt    1 root     root          4096 Nov 10 06:45 ..
+-rw-r--r--    1 root     root         46218 Nov 10 05:50 routes.txt
+
+log/:
+total 16
+drwxr-xr-x    2 daemon   daemon        4096 Nov 10 06:45 .
+drwxrwxrwt    1 root     root          4096 Nov 10 06:45 ..
+-rw-r--r--    1 daemon   daemon        4459 Nov 10 06:45 bus.log
+/var/tmp $
+/var/tmp $ netstat -plunt
+Active Internet connections (only servers)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name
+tcp        0      0 0.0.0.0:8765            0.0.0.0:*               LISTEN      1/java
+/var/tmp $
+/var/tmp $ ps ax
+PID   USER     TIME  COMMAND
+    1 daemon    0:04 /usr/lib/jvm/zulu17/bin/java -classpath /var/tmp/bus/lib/bus-0.3.0.jar:/var/tmp/bus/lib/groovy-4.0.14.jar:/var/tmp/bus/lib/ratpack-...
+   64 daemon    0:00 sh
+   91 daemon    0:00 ps ax
+/var/tmp $
+/var/tmp $ exit # Or simply <Ctrl-D>.
+0
 ```
 
 ## Consuming
