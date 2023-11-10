@@ -224,9 +224,63 @@ $ curl 'http://localhost:8765/route/direct?from=82&to=35390'
 
 ### Logging
 
-The microservice has the ability to log messages to a logfile and to the Unix syslog facility.
+The microservice has the ability to log messages to a logfile and to the Unix syslog facility. When running under Ubuntu Server (not in a Docker container), logs can be seen and analyzed in an ordinary fashion, by `tail`ing the `log/bus.log` logfile:
 
-**TBD** :dvd:
+```
+$ tail -f log/bus.log
+...
+[2023-11-10][15:25:09][INFO ]  Server started on port 8765
+...
+[2023-11-10][15:30:09][DEBUG]  from=4838 | to=524987
+[2023-11-10][15:30:09][DEBUG]  1 =  1 2 3 4 5 6 7 8 9 987 11 12 13 4987 415 ...
+...
+[2023-11-10][15:30:30][DEBUG]  from=82 | to=35390
+[2023-11-10][15:30:30][DEBUG]  1 =  1 2 3 4 5 6 7 8 9 987 11 12 13 4987 415 ...
+...
+[2023-11-10][15:35:07][INFO ]  Server stopped
+```
+
+Messages registered by the Unix system logger can be seen and analyzed using the `journalctl` utility:
+
+```
+$ journalctl -f
+...
+Nov 10 15:25:09 <hostname> java[<pid>]: Server started on port 8765
+Nov 10 15:30:09 <hostname> java[<pid>]: from=4838 | to=524987
+Nov 10 15:30:30 <hostname> java[<pid>]: from=82 | to=35390
+Nov 10 15:35:07 <hostname> java[<pid>]: Server stopped
+```
+
+Inside the running container logs might be queried also by `tail`ing the `log/bus.log` logfile:
+
+```
+/var/tmp $ tail -f log/bus.log
+...
+[2023-11-10][12:50:07][INFO ]  Server started on port 8765
+...
+[2023-11-10][12:55:09][DEBUG]  from=4838 | to=524987
+[2023-11-10][12:55:09][DEBUG]  1 =  1 2 3 4 5 6 7 8 9 987 11 12 13 4987 415 ...
+...
+[2023-11-10][12:55:21][DEBUG]  from=82 | to=35390
+[2023-11-10][12:55:21][DEBUG]  1 =  1 2 3 4 5 6 7 8 9 987 11 12 13 4987 415 ...
+...
+```
+
+And of course Docker itself gives the possibility to read log messages by using the corresponding command for that:
+
+```
+$ sudo docker logs -f busgrv
+...
+[2023-11-10][12:50:07][INFO ]  Server started on port 8765
+...
+[2023-11-10][12:55:09][DEBUG]  from=4838 | to=524987
+[2023-11-10][12:55:09][DEBUG]  1 =  1 2 3 4 5 6 7 8 9 987 11 12 13 4987 415 ...
+...
+[2023-11-10][12:55:21][DEBUG]  from=82 | to=35390
+[2023-11-10][12:55:21][DEBUG]  1 =  1 2 3 4 5 6 7 8 9 987 11 12 13 4987 415 ...
+...
+[2023-11-10][13:00:06][INFO ]  Server stopped
+```
 
 ### Error handling
 
