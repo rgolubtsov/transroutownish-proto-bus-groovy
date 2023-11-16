@@ -59,7 +59,7 @@ class UrbanBusRoutingController {
         /**
          * Gets called when the server is about to be started.
          *
-         * @param event The metadata object containing the startup event info.
+         * @param event A metadata object containing the startup event info.
          */
         void onStart(final StartEvent event) {
             def registry = event.getRegistry()
@@ -74,7 +74,7 @@ class UrbanBusRoutingController {
         /**
          * Gets called just before the server is about to be stopped.
          *
-         * @param event The metadata object containing the stop event info.
+         * @param event A metadata object containing the stop event info.
          */
         void onStop(final StopEvent event) {
             def registry = event.getRegistry()
@@ -177,7 +177,7 @@ class UrbanBusRoutingController {
     /**
      * Starts up the bundled web server.
      *
-     * @param args The list containing the server port number to listen on,
+     * @param args A list containing the server port number to listen on,
      *             as the first element.
      */
     void startup(final List args) {
@@ -281,7 +281,7 @@ class UrbanBusRoutingController {
      * given is direct (i.e. contains in any of the routes), or not.
      *
      * @param debug_log_enabled The debug logging enabler.
-     * @param routes_list       The list containing all available routes.
+     * @param routes_list       A list containing all available routes.
      * @param from              The starting bus stop point.
      * @param to                The ending   bus stop point.
      *

@@ -39,7 +39,7 @@ class UrbanBusRoutingApp {
     /** The application properties object. */
     static Properties props
 
-    /** The list, containing all available routes. */
+    /** A list containing all available routes. */
     static List routes_list
 
     /** The Unix system logger. */
@@ -48,7 +48,7 @@ class UrbanBusRoutingApp {
     /**
      * The microservice entry point.
      *
-     * @param args The array of command-line arguments.
+     * @param args An array of command-line arguments.
      */
     static void main(final String[] args) {
         // Getting the application properties object.
