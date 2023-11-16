@@ -27,14 +27,15 @@ repositories {
 
 dependencies {
     // This subproject is a Groovy application.
-    implementation 'org.apache.groovy:groovy:4.0.14'
+    implementation 'org.apache.groovy:groovy:4.0.15'
 
-    // This dependency is used by the application.
-    implementation 'com.google.guava:guava:32.1.2-jre'
+    // Guava: Google Core Libraries for Java - this dependency is used
+    // by the application.
+    implementation 'com.google.guava:guava:32.1.3-jre'
 
     // SLF4J Reload4j Provider - to utilize SLF4J logger using Log4j.
     implementation 'org.slf4j:slf4j-reload4j:2.0.9'
-    implementation 'ch.qos.reload4j:reload4j:1.2.25' // <== Not v1.2.22 JAR !
+    implementation 'ch.qos.reload4j:reload4j:1.2.25'
 
     // Syslog4j Graylog2 - to log messages through the Unix system logger.
     implementation 'org.graylog2:syslog4j:0.9.61'
@@ -43,7 +44,7 @@ dependencies {
     implementation 'net.java.dev.jna:jna:5.13.0'
 
     // Ratpack - to set up and run a Netty-based web server.
-    implementation 'io.ratpack:ratpack-core:1.10.0-milestone-25'
+    implementation 'io.ratpack:ratpack-core:1.10.0-milestone-29'
 }
 
 // Apply a specific Java toolchain to ease working on different environments.
