@@ -2,7 +2,7 @@
  * bus/src/main/groovy/com/transroutownish/proto/bus/
  * UrbanBusRoutingResponseError.groovy
  * ============================================================================
- * Urban bus routing microservice prototype (Groovy port). Version 0.3.0
+ * Urban bus routing microservice prototype (Groovy port). Version 0.3.1
  * ============================================================================
  * A daemon written in Groovy, designed and intended to be run
  * as a microservice, implementing a simple urban bus routing prototype.
@@ -19,7 +19,7 @@ package com.transroutownish.proto.bus
  * when one of the <strong>4xx Client Error</strong> section's errors occurred
  * during processing the request.
  *
- * @version 0.3.0
+ * @version 0.3.1
  * @since   0.1.5
  */
 class UrbanBusRoutingResponseError {
