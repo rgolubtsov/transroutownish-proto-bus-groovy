@@ -160,27 +160,27 @@ OpenJDK 64-Bit Server VM Zulu17.46+19-CA (build 17.0.9+8-LTS, mixed mode, sharin
 /var/tmp $
 /var/tmp $ ls -al
 total 24
-drwxrwxrwt    1 root     root          4096 Nov 10 06:45 .
+drwxrwxrwt    1 root     root          4096 Nov 21 07:45 .
 drwxr-xr-x    1 root     root          4096 Sep 28 11:18 ..
-drwxr-xr-x    4 root     root          4096 Nov 10 06:30 bus
-drwxr-xr-x    2 root     root          4096 Nov 10 06:30 data
-drwxr-xr-x    2 daemon   daemon        4096 Nov 10 06:45 log
+drwxr-xr-x    4 root     root          4096 Nov 21 07:20 bus
+drwxr-xr-x    2 root     root          4096 Nov 21 07:20 data
+drwxr-xr-x    2 daemon   daemon        4096 Nov 21 07:45 log
 /var/tmp $
-/var/tmp $ ls -al bus/bin/bus bus/lib/bus-0.3.0.jar data/ log/
--rwxr-xr-x    1 root     root         10787 Nov 10 06:20 bus/bin/bus
--rw-r--r--    1 root     root         33895 Nov 10 06:20 bus/lib/bus-0.3.0.jar
+/var/tmp $ ls -al bus/bin/bus bus/lib/bus-0.3.1.jar data/ log/
+-rwxr-xr-x    1 root     root         10843 Nov 21 07:10 bus/bin/bus
+-rw-r--r--    1 root     root         33895 Nov 21 07:10 bus/lib/bus-0.3.1.jar
 
 data/:
 total 56
-drwxr-xr-x    2 root     root          4096 Nov 10 06:30 .
-drwxrwxrwt    1 root     root          4096 Nov 10 06:45 ..
--rw-r--r--    1 root     root         46218 Nov 10 05:50 routes.txt
+drwxr-xr-x    2 root     root          4096 Nov 21 07:20 .
+drwxrwxrwt    1 root     root          4096 Nov 21 07:45 ..
+-rw-r--r--    1 root     root         46218 Nov 21 06:10 routes.txt
 
 log/:
 total 16
-drwxr-xr-x    2 daemon   daemon        4096 Nov 10 06:45 .
-drwxrwxrwt    1 root     root          4096 Nov 10 06:45 ..
--rw-r--r--    1 daemon   daemon        4459 Nov 10 06:45 bus.log
+drwxr-xr-x    2 daemon   daemon        4096 Nov 21 07:45 .
+drwxrwxrwt    1 root     root          4096 Nov 21 07:45 ..
+-rw-r--r--    1 daemon   daemon        4459 Nov 21 07:45 bus.log
 /var/tmp $
 /var/tmp $ netstat -plunt
 Active Internet connections (only servers)
@@ -189,9 +189,9 @@ tcp        0      0 0.0.0.0:8765            0.0.0.0:*               LISTEN      
 /var/tmp $
 /var/tmp $ ps ax
 PID   USER     TIME  COMMAND
-    1 daemon    0:04 /usr/lib/jvm/zulu17/bin/java -classpath /var/tmp/bus/lib/bus-0.3.0.jar:/var/tmp/bus/lib/groovy-4.0.14.jar:/var/tmp/bus/lib/ratpack-...
-   64 daemon    0:00 sh
-   91 daemon    0:00 ps ax
+    1 daemon    0:04 /usr/lib/jvm/zulu17/bin/java -classpath /var/tmp/bus/lib/bus-0.3.1.jar:/var/tmp/bus/lib/groovy-4.0.15.jar:/var/tmp/bus/lib/ratpack-...
+   62 daemon    0:00 sh
+   89 daemon    0:00 ps ax
 /var/tmp $
 /var/tmp $ exit # Or simply <Ctrl-D>.
 0
@@ -229,15 +229,16 @@ The microservice has the ability to log messages to a logfile and to the Unix sy
 ```
 $ tail -f log/bus.log
 ...
-[2023-11-10][15:25:09][INFO ]  Server started on port 8765
+[2023-11-21][10:25:51][INFO ]  Server started on port 8765
 ...
-[2023-11-10][15:30:09][DEBUG]  from=4838 | to=524987
-[2023-11-10][15:30:09][DEBUG]  1 =  1 2 3 4 5 6 7 8 9 987 11 12 13 4987 415 ...
+[2023-11-21][10:30:06][DEBUG]  from=4838 | to=524987
+[2023-11-21][10:30:06][DEBUG]  1 =  1 2 3 4 5 6 7 8 9 987 11 12 13 4987 415 ...
 ...
-[2023-11-10][15:30:30][DEBUG]  from=82 | to=35390
-[2023-11-10][15:30:30][DEBUG]  1 =  1 2 3 4 5 6 7 8 9 987 11 12 13 4987 415 ...
+[2023-11-21][10:30:26][DEBUG]  from=82 | to=35390
+[2023-11-21][10:30:26][DEBUG]  1 =  1 2 3 4 5 6 7 8 9 987 11 12 13 4987 415 ...
 ...
-[2023-11-10][15:35:07][INFO ]  Server stopped
+[2023-11-21][10:35:06][INFO ]  Server stopped
+...
 ```
 
 Messages registered by the Unix system logger can be seen and analyzed using the `journalctl` utility:
@@ -245,10 +246,10 @@ Messages registered by the Unix system logger can be seen and analyzed using the
 ```
 $ journalctl -f
 ...
-Nov 10 15:25:09 <hostname> java[<pid>]: Server started on port 8765
-Nov 10 15:30:09 <hostname> java[<pid>]: from=4838 | to=524987
-Nov 10 15:30:30 <hostname> java[<pid>]: from=82 | to=35390
-Nov 10 15:35:07 <hostname> java[<pid>]: Server stopped
+Nov 21 10:25:51 <hostname> java[<pid>]: Server started on port 8765
+Nov 21 10:30:06 <hostname> java[<pid>]: from=4838 | to=524987
+Nov 21 10:30:26 <hostname> java[<pid>]: from=82 | to=35390
+Nov 21 10:35:06 <hostname> java[<pid>]: Server stopped
 ```
 
 Inside the running container logs might be queried also by `tail`ing the `log/bus.log` logfile:
@@ -256,13 +257,13 @@ Inside the running container logs might be queried also by `tail`ing the `log/bu
 ```
 /var/tmp $ tail -f log/bus.log
 ...
-[2023-11-10][12:50:07][INFO ]  Server started on port 8765
+[2023-11-21][07:45:07][INFO ]  Server started on port 8765
 ...
-[2023-11-10][12:55:09][DEBUG]  from=4838 | to=524987
-[2023-11-10][12:55:09][DEBUG]  1 =  1 2 3 4 5 6 7 8 9 987 11 12 13 4987 415 ...
+[2023-11-21][08:00:10][DEBUG]  from=4838 | to=524987
+[2023-11-21][08:00:10][DEBUG]  1 =  1 2 3 4 5 6 7 8 9 987 11 12 13 4987 415 ...
 ...
-[2023-11-10][12:55:21][DEBUG]  from=82 | to=35390
-[2023-11-10][12:55:21][DEBUG]  1 =  1 2 3 4 5 6 7 8 9 987 11 12 13 4987 415 ...
+[2023-11-21][08:00:27][DEBUG]  from=82 | to=35390
+[2023-11-21][08:00:27][DEBUG]  1 =  1 2 3 4 5 6 7 8 9 987 11 12 13 4987 415 ...
 ...
 ```
 
@@ -271,15 +272,16 @@ And of course Docker itself gives the possibility to read log messages by using 
 ```
 $ sudo docker logs -f busgrv
 ...
-[2023-11-10][12:50:07][INFO ]  Server started on port 8765
+[2023-11-21][07:45:07][INFO ]  Server started on port 8765
 ...
-[2023-11-10][12:55:09][DEBUG]  from=4838 | to=524987
-[2023-11-10][12:55:09][DEBUG]  1 =  1 2 3 4 5 6 7 8 9 987 11 12 13 4987 415 ...
+[2023-11-21][08:00:10][DEBUG]  from=4838 | to=524987
+[2023-11-21][08:00:10][DEBUG]  1 =  1 2 3 4 5 6 7 8 9 987 11 12 13 4987 415 ...
 ...
-[2023-11-10][12:55:21][DEBUG]  from=82 | to=35390
-[2023-11-10][12:55:21][DEBUG]  1 =  1 2 3 4 5 6 7 8 9 987 11 12 13 4987 415 ...
+[2023-11-21][08:00:27][DEBUG]  from=82 | to=35390
+[2023-11-21][08:00:27][DEBUG]  1 =  1 2 3 4 5 6 7 8 9 987 11 12 13 4987 415 ...
 ...
-[2023-11-10][13:00:06][INFO ]  Server stopped
+[2023-11-21][08:05:09][INFO ]  Server stopped
+...
 ```
 
 ### Error handling
