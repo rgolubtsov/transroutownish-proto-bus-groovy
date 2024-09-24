@@ -49,14 +49,16 @@ One may consider this project has to be suitable for a wide variety of applied a
 
 ## Building
 
-The microservice might be built and run successfully under **Ubuntu Server (Ubuntu 22.04.3 LTS x86-64)**. Install the necessary dependencies (`openjdk-17-jdk-headless`, `groovy`, `gradle`, `make`, `docker.io`):
+The microservice might be built and run successfully under **Ubuntu Server (Ubuntu 22.04.3 LTS x86-64)**. Install the necessary dependencies (`openjdk-17-jdk-headless`, ~~`groovy`, `gradle`~~, `make`, `docker.io`):
 
 ```
 $ sudo apt-get update && \
   sudo apt-get install openjdk-17-jdk-headless make docker.io -y
 ```
 
-Since Groovy and Gradle packages are somehow outdated in the stock Ubuntu package repository, they are preferred to be installed through the SDKMAN! toolkit. For that, first it needs to install SDKMAN! and to `source` its initialization script:
+**Note:** A system-wide Groovy and Gradle installations are not needed to build the microservice, since it is intended to use Gradle Wrapper for that, which is already resided in the current repository. As of Groovy, it will be automatically fetched by Gradle Wrapper and installed during the dependencies resolution build phase. Hence, commands given in the following two paragraphs can be simply ignored &mdash; they are kept here just for reference.
+
+> Since Groovy and Gradle packages are somehow outdated in the stock Ubuntu package repository, they are preferred to be installed through the SDKMAN! toolkit. For that, first it needs to install SDKMAN! and to `source` its initialization script:
 
 ```
 $ curl -s https://get.sdkman.io | bash
@@ -64,7 +66,7 @@ $ curl -s https://get.sdkman.io | bash
 $ . /home/<username>/.sdkman/bin/sdkman-init.sh
 ```
 
-Then install latest stable versions of Groovy and Gradle via SDKMAN!:
+> Then install latest stable versions of Groovy and Gradle via SDKMAN!:
 
 ```
 $ sdk install groovy
